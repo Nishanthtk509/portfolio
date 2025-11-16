@@ -1,33 +1,48 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <title>NISHANTH</title>
-    <link rel="stylesheet" href="assets/css/style.css" />
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Mona+Sans:ital,wght@0,200..900;1,200..900&display=swap" rel="stylesheet">
-  </head>
-  <body>
-    <nav class="navbar">
-      <div class="brand">NISHANTH TK</div>
-      <div class="menu-toggle" id="menu-toggle">
-        <span></span>
-        <span></span>
-        <span></span>
-      </div>
-    </nav>
 
-    <div class="menu" id="menu">
-      <a href="#">Home</a>
-      <a href="#">Products</a>
-      <a href="#">About</a>
-      <a href="#">Contact</a>
+<head>
+  <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>NISHANTH</title>
+  <link rel="stylesheet" href="assets/css/style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Mona+Sans:ital,wght@0,200..900;1,200..900&display=swap"
+    rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap"
+    rel="stylesheet">
+</head>
+
+<body >
+  <nav class="navbar">
+    <!-- <div class="brand">NISHANTH TK</div> -->
+    <div class="brand"></div>
+    <div class="menu-toggle" id="menu-toggle">
+      <span></span>
+      <span></span>
+      <span></span>
     </div>
+  </nav>
+
+  <div class="menu" id="menu">
+    <a href="#">Home</a>
+      <a href="#about">About</a>
+    <a href="#project">Projects</a>
+      <a href="#experience">Experience</a>
+      <a href="#skill">Skills</a>
+   <a href="assets/pdf/NISHANTH%2520TK.pdf" download="Nishanth_TK_Resume.pdf">Download Resume</a>
+
+    <a href="#contact">Contact</a>
+  </div>
 
 
-<!-- hero-section -->
- <section class="section1">
+  <!-- hero-section -->
+  <!-- <section class="section1">
       <div class="hero-head">
         <div class="hero-img">
           <img src="assets/img/hero.jpg" alt="">
@@ -47,10 +62,231 @@
           
         </div>
       </div>
- </section>
+ </section> -->
+<section>
+ <div class="video-background">
+    <video autoplay muted loop playsinline id="bgVideo">
+      <source src="assets/video/video.mp4" type="video/mp4">
+      <!-- You can add .webm or .ogg for better browser support -->
+    </video>
+    <div class="overlay">
+      <div class="hero-content">
+        <h1>Hey, I am <span>Nishanth</span></h1>
+        <h2><span id="dynamic-text">Web Developer</span></h2>
+       <p>
+  I’m a Full Stack Developer skilled in <strong>Python, Django, and JavaScript</strong>,
+  creating fast, user-friendly web applications with clean design and strong functionality.
+</p>
 
-  
- 
- <script src="assets/js/scripts.js"></script>
-  </body>
+        <div class="buttons">
+          <a href="#contact"><button>Contact Me</button></a>
+          <a href="#project"><button>View Projects</button></a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<section>
+  <div class="profile">
+    <div class="cover"></div>
+    <div class="about-profile" id="about">
+      <div class="hero-image">
+        <img src="assets/img/image.jpg" alt="Profile Image">
+      </div>
+      <div class="about-content">
+        <p>
+          Hi, I’m Nishanth TK, a Full Stack Developer with experience since April 2024, currently working as an Associate Web Developer at Cybexel Technologies Pvt Ltd. I specialize in building dynamic and scalable web applications using Python, Django, Django REST Framework, HTML, CSS, JavaScript, and jQuery.
+
+I enjoy crafting clean, efficient code and creating seamless user experiences. My portfolio showcases projects where I’ve designed and implemented both front-end interfaces and back-end APIs, turning ideas into fully functional web solutions.
+
+I’m passionate about continuous learning and love working on projects that challenge me to grow as a developer.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+<!-- <section class="cover-letter">-->
+<!--  <div class="letter-container">-->
+<!--    <h1>Hi, I'm Santhappan</h1>-->
+<!--    <p>-->
+<!--      Welcome to my digital portfolio. I am a passionate web developer and designer, blending creativity and technical skills to build intuitive, visually striking web experiences. My work revolves around modern web technologies, clean design principles, and interactive interfaces.-->
+<!--    </p>-->
+<!--    <p>-->
+<!--      I specialize in creating responsive websites, seamless user interfaces, and dynamic web applications that engage and delight users. Every project I take on is an opportunity to combine innovation with precision, turning ideas into functional, elegant solutions.-->
+<!--    </p>-->
+<!--    <p>-->
+<!--      Feel free to explore my projects, case studies, and the skills that I bring to every endeavor. I’m always excited to collaborate on projects that challenge the norm and push the boundaries of digital design.-->
+<!--    </p>-->
+<!--    <p>-->
+<!--      Let’s create something extraordinary together.-->
+<!--    </p>-->
+<!--    <p class="signature">— Santhappan</p>-->
+<!--  </div>-->
+<!--</section>-->
+
+
+
+
+
+<section class="experience" id="experience">
+  <h2>Experience</h2>
+
+  <div class="experience-section">
+    <div class="experience-text">
+      <h3>CYBEXEL TECHNOLOGIES PVT LTD</h3>
+      <p>
+        Since April 2024, I have been working as an Associate Web Developer at Cybexel Technologies Pvt Ltd, contributing to multiple web projects and building dynamic, scalable applications using Python, Django, Django REST Framework, HTML, CSS, JavaScript, and jQuery. I have designed and implemented both front-end interfaces and back-end APIs, ensuring seamless integration, responsive design, and optimal performance.
+      </p>
+      <p>
+        My work emphasizes clean, maintainable code and user-friendly experiences. I consistently deliver solutions that meet client requirements and project goals while actively learning new technologies to enhance my skill set. My portfolio showcases projects where I have successfully transformed ideas into fully functional web applications, demonstrating strong problem-solving skills and commitment to quality development.
+      </p>
+    </div>
+
+    <div class="experience-cover">
+      <div class="experience-image">
+        <img src="assets/img/cybexel.jpg" alt="CYBEXEL Technologies">
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<section class="projects" id="project">
+  <h2>My Works</h2>
+
+  <div class="project-grid">
+    <div class="project-card">
+      <img src="assets/img/buysel.png" alt="Buysel.in">
+      <h3>Buysel.in</h3>
+      <p>Developed a comprehensive real estate platform enabling users to buy, sell, rent, and resell properties</p>
+      <a href="https://buysel.in" target="_blank" class="btn-view">Visit Website</a>
+    </div>
+
+    <div class="project-card">
+      <img src="assets/img/jewellery.png" alt="NME360.com">
+      <h3>My Jewellery My Design</h3>
+      <p>Built an interactive platform for showcasing jewellery with cart, wishlist, and AR-based product visualization.</p>
+      <a href="https://nme360.com" target="_blank" class="btn-view">Visit Website</a>
+    </div>
+
+    <div class="project-card">
+      <img src="assets/img/spares.png" alt="Sparescorporation.com">
+      <h3>Sparescorporation.com</h3>
+      <p>Developed a dynamic and modern website for showcasing furniture collections.</p>
+      <a href="https://sparescorporation.com" target="_blank" class="btn-view">Visit Website</a>
+    </div>
+  </div>
+</section>
+
+  <section class="skills-parallax" id="skill">
+  <div class="skills-content">
+    <h2>My Skills</h2>
+    <div class="skills-grid">
+      <div class="skill-card">
+        <h3>Web Development</h3>
+        <p>HTML, CSS, JavaScript, Django</p>
+      </div>
+<!--      <div class="skill-card">-->
+<!--        <h3>UI/UX Design</h3>-->
+<!--        <p>Figma, Adobe XD, Responsive Design</p>-->
+<!--      </div>-->
+      <div class="skill-card">
+        <h3>Database Management</h3>
+        <p>PostgreSQL, MySQL</p>
+      </div>
+      <div class="skill-card">
+        <h3>APIs & Integrations</h3>
+        <p>REST APIs, Django REST Framework</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<section class="contact-section" id="contact">
+  <div class="contact-container">
+    <!-- Left Message Animation in Mobile Frame -->
+    <div class="contact-animation">
+      <div class="mobile-frame">
+        <div class="mobile-notch"></div>
+        <div class="message-wrapper">
+          <div class="message incoming">Hello! 👋</div>
+          <div class="message outgoing">I’m Nishanth TK. Got a project?</div>
+          <div class="message incoming">Feel free to send your message below.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Right Contact Form -->
+    <div class="contact-form-wrapper">
+      <h2 class="neon-text">Send Me a Message</h2>
+      <form class="contact-form">
+        <div class="form-group">
+          <input type="text" name="name" required>
+          <label>Your Name</label>
+        </div>
+        <div class="form-group">
+          <input type="email" name="email" required>
+          <label>Your Email</label>
+        </div>
+        <div class="form-group">
+          <textarea name="message" required></textarea>
+          <label>Your Message</label>
+        </div>
+        <button type="submit">Send</button>
+      </form>
+    </div>
+  </div>
+</section>
+
+
+
+<!-- Add Font Awesome CDN in <head> -->
+<link
+  rel="stylesheet"
+  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+/>
+
+<footer class="footer">
+  <div class="footer-container">
+    <div class="footer-section">
+      <h3>Contact</h3>
+      <p>Email: <a href="mailto:nishanthtk509@gmail.com">nishanthtk509@gmail.com</a></p>
+      <p>Phone: +91 8129106509</p>
+    </div>
+    <div class="footer-section">
+      <h3>Follow Me</h3>
+      <div class="social-links">
+        <a href="https://wa.me/911234567890" target="_blank"><i class="fab fa-whatsapp"></i></a>
+        <a href="https://instagram.com/yourprofile" target="_blank"><i class="fab fa-instagram"></i></a>
+        <a href="https://linkedin.com/in/yourprofile" target="_blank"><i class="fab fa-linkedin"></i></a>
+        <a href="https://github.com/yourprofile" target="_blank"><i class="fab fa-github"></i></a>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2025 Nishanth. All rights reserved.</p>
+  </div>
+</footer>
+
+
+
+
+  <script src="assets/js/scripts.js"></script>
+</body>
+
 </html>
+
+
+
+
+
+
+
+
+
