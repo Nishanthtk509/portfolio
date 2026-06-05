@@ -2,291 +2,1087 @@
 <html lang="en">
 
 <head>
-  <meta charset="UTF-8" />
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NISHANTH Portfolio</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .slide-up {
+            transform: translateY(-100%);
+        }
 
-  <title>NISHANTH</title>
-  <link rel="stylesheet" href="assets/css/style.css" />
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Mona+Sans:ital,wght@0,200..900;1,200..900&display=swap"
-    rel="stylesheet">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link
-    href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap"
-    rel="stylesheet">
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            overflow-x: hidden;
+        }
+
+        /* =====================
+           WORD ANIMATION
+        ===================== */
+        .word {
+            display: inline-block;
+            opacity: 0;
+            transform: translateY(20px);
+            filter: blur(5px);
+            transition: all 0.6s ease;
+        }
+
+        .word.show {
+            opacity: 1;
+            transform: translateY(0);
+            filter: blur(0);
+        }
+
+        /* =====================
+           HORIZONTAL SCROLL FIX
+        ===================== */
+        #horizontal-section {
+            position: relative;
+            /* height is set dynamically by JS based on track width */
+            background: #000;
+        }
+
+        #horizontal-section .sticky-wrap {
+            position: sticky;
+            top: 0;
+            height: 100vh;
+            overflow: hidden;
+            /* ← THE KEY FIX */
+            display: flex;
+            align-items: center;
+        }
+
+        #track {
+            display: flex;
+            gap: 32px;
+            padding: 0 15vw;
+            will-change: transform;
+            /* NO CSS transition — JS lerp handles smoothness */
+        }
+
+        /* Project cards */
+
+
+        .proj-card:hover {
+            border-color: #FF5F15;
+        }
+
+        .proj-card-bg {
+            position: absolute;
+            inset: 0;
+            background: #1a1a1a;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 5rem;
+            overflow: hidden;
+        }
+
+        /* .proj-card-bg img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0.5;
+            transition: opacity 0.4s, transform 0.4s;
+        } */
+
+        .proj-card:hover .proj-card-bg img {
+            opacity: 0.7;
+            transform: scale(1.04);
+        }
+
+        .proj-card-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .proj-card-num {
+            font-size: 0.75rem;
+            color: #FF5F15;
+            letter-spacing: 0.3em;
+            text-transform: uppercase;
+            margin-bottom: 8px;
+        }
+
+        /* Progress dots */
+        .progress-dots {
+            position: absolute;
+            bottom: 28px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 8px;
+            z-index: 10;
+        }
+
+        .pdot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: #333;
+            transition: background 0.3s, transform 0.3s;
+            cursor: pointer;
+        }
+
+        .pdot.active {
+            background: #FF5F15;
+            transform: scale(1.5);
+        }
+
+        /* Image transition for project switcher */
+        #project-image {
+            transition: opacity 0.3s ease, transform 0.3s ease;
+        }
+
+        .hide-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+
+        .hide-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+    </style>
 </head>
 
-<body >
-  <nav class="navbar">
-    <!-- <div class="brand">NISHANTH TK</div> -->
-    <div class="brand"></div>
-    <div class="menu-toggle" id="menu-toggle">
-      <span></span>
-      <span></span>
-      <span></span>
+<body class="bg-black overflow-hidden">
+
+    <!-- ===================== PRELOADER ===================== -->
+    <div id="preloader"
+        class="fixed inset-0 bg-[#FF5F15] flex items-center justify-center overflow-hidden z-50 transition-transform duration-[3000ms] ease-in-out">
+        <h1 class="absolute select-none pointer-events-none
+            text-center whitespace-nowrap
+            text-3xl sm:text-5xl md:text-6xl lg:text-8xl xl:text-9xl
+            font-black uppercase tracking-[0.08em] sm:tracking-[0.12em]
+            text-black opacity-10 px-4">
+            NISHANTH TK
+        </h1>
     </div>
-  </nav>
 
-  <div class="menu" id="menu">
-    <a href="#">Home</a>
-      <a href="#about">About</a>
-    <a href="#project">Projects</a>
-      <a href="#experience">Experience</a>
-      <a href="#skill">Skills</a>
-   <a href="assets/pdf/NISHANTH TK.pdf" download="Nishanth_TK_Resume.pdf">Download Resume</a>
+    <!-- ===================== MAIN CONTENT ===================== -->
+    <main id="main-content" class="hidden min-h-screen bg-black overflow-x-hidden">
 
-    <a href="#contact">Contact</a>
-  </div>
-
-
-  <!-- hero-section -->
-  <!-- <section class="section1">
-      <div class="hero-head">
-        <div class="hero-img">
-          <img src="assets/img/hero.jpg" alt="">
-        </div>
-        <div class="hero-text">
-          <h1>Hey, I am <span>Nishanth </span> </h1>
-          <h1>A <span>Web Developer</span></h1>
-          <div class="hero-para">
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. 
-            Et nesciunt tempora fugiat delectus repellendus totam non excepturi nemo error dolorem ipsum velit, ullam est ducimus laboriosam rem ut tempore omnis!</p>
-            <div class="hero-btn">
-               <button>contact me</button>
-              <button>view projects</button>
+        <!-- NAVBAR -->
+        <nav class="fixed top-0 left-0 w-full z-50">
+            <div class="max-w-7xl mx-auto px-6 lg:px-10 py-6 flex items-center justify-between">
+                <a href="#home" class="text-white text-lg sm:text-xl md:text-2xl font-bold tracking-widest"></a>
+                <button id="menu-btn" class="relative z-[110] flex flex-col gap-2 cursor-pointer">
+                    <span class="w-8 h-[2px] bg-white"></span>
+                    <span class="w-6 ml-auto h-[2px] bg-white"></span>
+                    <span class="w-8 h-[2px] bg-white"></span>
+                </button>
             </div>
-             
-          </div>
-          
+        </nav>
+
+        <!-- FULLSCREEN MENU -->
+        <div id="menu"
+            class="fixed inset-0 bg-[#FF5F15] z-[100] translate-x-full transition-transform duration-700 ease-in-out">
+            <button id="close-btn" class="absolute top-6 right-6 text-black text-5xl font-light">×</button>
+            <div class="h-full flex flex-col justify-center items-center gap-10">
+                <a href="#home"
+                    class="menu-link text-black text-4xl md:text-6xl font-black uppercase tracking-wider">Home</a>
+                <a href="#about"
+                    class="menu-link text-black text-4xl md:text-6xl font-black uppercase tracking-wider">About</a>
+                <a href="#work"
+                    class="menu-link text-black text-4xl md:text-6xl font-black uppercase tracking-wider">Projects</a>
+                <a href="#form"
+                    class="menu-link text-black text-4xl md:text-6xl font-black uppercase tracking-wider">Contact</a>
+
+                <a href="assets/pdf/NISHANTH TK.pdf" download
+                    class="menu-link text-black text-4xl md:text-6xl font-black uppercase tracking-wider flex items-center gap-3">
+                    Resume
+                   
+                </a>
+
+            </div>
         </div>
-      </div>
- </section> -->
-<section>
- <div class="video-background">
-    <video autoplay muted loop playsinline id="bgVideo">
-      <source src="assets/video/video.mp4" type="video/mp4">
-      <!-- You can add .webm or .ogg for better browser support -->
-    </video>
-    <div class="overlay">
-      <div class="hero-content">
-        <h1>Hey, I am <span>Nishanth</span></h1>
-        <h2><span id="dynamic-text">Web Developer</span></h2>
-       <p>
-  I’m a Full Stack Developer skilled in <strong>Python, Django, and JavaScript</strong>,
-  creating fast, user-friendly web applications with clean design and strong functionality.
-</p>
 
-        <div class="buttons">
-          <a href="#contact"><button>Contact Me</button></a>
-          <a href="#project"><button>View Projects</button></a>
+        <!-- ===================== HERO ===================== -->
+        <section id="home"
+            class="min-h-screen flex items-center justify-center lg:justify-start px-6 md:px-12 lg:px-20">
+            <div class="max-w-5xl">
+                <div class="flex items-center gap-4 mb-6">
+                    <span class="w-12 h-[2px] bg-[#FF5F15]"></span>
+                    <p class="text-gray-400 uppercase tracking-[0.3em] text-xs sm:text-sm">Full Stack Developer</p>
+                </div>
+                <h1 class="text-white font-black leading-none tracking-tight
+                    text-5xl sm:text-6xl md:text-7xl lg:text-8xl xl:text-9xl">
+                    NISHANTH
+                </h1>
+                <h1 class="text-[#FF5F15] font-black leading-none tracking-tight
+                    text-5xl sm:text-6xl md:text-7xl lg:text-8xl xl:text-9xl">
+                    TK
+                </h1>
+                <p class="mt-8 max-w-xl text-gray-400 text-sm sm:text-base md:text-lg">
+                    Building modern, responsive and high-performance web applications
+                    using HTML, Tailwind CSS, JavaScript, Django and Python.
+                </p>
+                <div class="mt-10 flex flex-wrap gap-4">
+                    <a href="#work" class="px-8 py-3 bg-[#FF5F15] text-black font-semibold rounded-full">
+                        View Projects
+                    </a>
+                    <a href="#form" class="px-8 py-3 border border-white text-white rounded-full">
+                        Contact Me
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===================== ABOUT ===================== -->
+        <section id="about" class="bg-black px-6 md:px-12 py-12">
+            <div class="max-w-6xl mx-auto">
+                <p class="text-[#FF5F15] uppercase tracking-[0.3em] text-sm mb-10">About</p>
+                <div class="h-[50vh] relative">
+                    <p id="scroll-text"
+                        class="sticky top-32 text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold leading-tight text-gray-700 transition-all duration-300">
+                        I build modern digital experiences that combine clean design,
+                        performance, and functionality to create products that users love.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <section id="experience" class="bg-black px-6 md:px-12 py-20">
+
+            <div class="max-w-7xl mx-auto">
+
+                <p class="text-[#FF5F15] uppercase tracking-[0.3em] text-sm mb-8">
+                    Experience
+                </p>
+
+                <div class="grid lg:grid-cols-2 gap-12 h-[80vh]">
+
+                    <!-- LEFT IMAGE -->
+                    <div class="hidden lg:block h-full">
+
+                        <div class="relative h-full rounded-3xl overflow-hidden">
+
+                            <img src="assets/img/cybexel.png" class="absolute inset-0 w-full h-full object-cover">
+
+                            <div class="absolute inset-0 bg-black/20"></div>
+
+                        </div>
+
+                    </div>
+
+                    <!-- MOBILE IMAGE -->
+                    <div class="lg:hidden h-[250px] rounded-3xl overflow-hidden">
+                        <img src="assets/img/cybexel.png" class="w-full h-full object-cover">
+                    </div>
+
+                    <div class="h-full overflow-y-auto hide-scrollbar py-4">
+
+                        <p class="text-2xl sm:text-3xl md:text-5xl lg:text-6xl font-black text-white leading-[1.2]">
+                            Hi, I'm <span class="text-[#FF5F15]">Nishanth TK</span>, a Full Stack Developer specializing
+                            in Python, Django, Django REST Framework, JavaScript, HTML, and CSS.
+                            With <span class="text-[#FF5F15]">2 years of experience</span>, I build responsive user
+                            interfaces and scalable back-end systems that deliver seamless digital experiences.
+                            I worked as an Associate Web Developer at Cybexel Technologies Pvt Ltd from April 2024
+                            to April 2026, developing modern web applications, REST APIs, and user-focused digital
+                            solutions.
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- ===================== SELECTED WORK (PROJECT SWITCHER) ===================== -->
+        <section id="work" class="bg-black">
+            <div class="max-w-7xl mx-auto px-6 md:px-12">
+                <p class="text-[#FF5F15] uppercase tracking-[0.3em] text-sm mb-10">Selected Works</p>
+            </div>
+
+            <div id="pin-container" class="relative h-[120vh]">
+                <div class="sticky top-0 h-screen flex items-center bg-black">
+                    <div class="max-w-7xl mx-auto w-full grid lg:grid-cols-2 gap-16 items-center px-6 md:px-12">
+
+                        <!-- LEFT NUMBER -->
+                        <div>
+                            <h1 id="project-number"
+                                class="text-[22vw] font-black text-gray-800 leading-none select-none">
+                                01
+                            </h1>
+                        </div>
+
+                        <!-- RIGHT CONTENT -->
+                        <div>
+                            <div class="overflow-hidden rounded-3xl">
+                                <img id="project-image" src="assets/img/buysel.png"
+                                    class="w-full h-[260px] md:h-[380px] object-cover">
+                            </div>
+                            <h2 id="project-title" class="text-white text-3xl md:text-5xl font-black mt-6">
+                                Buysel
+                            </h2>
+                            <p id="project-desc" class="text-gray-500 mt-4">
+                                Django • Tailwind • API
+                            </p>
+                            <a id="project-link" href="https://buysel.in" target="_blank"
+                                class="inline-block mt-6 text-[#FF5F15] font-semibold hover:underline">
+                                View Project
+                            </a>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===================== HORIZONTAL PROJECTS SCROLL (FIXED) ===================== -->
+        <section id="horizontal-section">
+
+            <div class="sticky-wrap">
+
+                <!-- Section label -->
+                <div class="absolute top-10 left-6 md:left-12 z-20">
+                    <p class="text-[#FF5F15] uppercase tracking-[0.3em] text-sm mb-1">Skills</p>
+
+                </div>
+
+                <!-- Scrolling track -->
+                <div id="track" class="flex gap-6 px-6 md:px-12">
+
+                    <!-- Card 1 -->
+                    <div class="w-[80vw] sm:w-[60vw] lg:w-[35vw] max-w-[680px] h-[40vh] sm:h-[45vh] lg:h-[52vh]
+                bg-[#111] border border-[#222] rounded-[28px]
+                flex items-center justify-center text-center
+                p-8 shrink-0 transition-all duration-300 hover:border-[#FF5F15]">
+
+                        <div>
+                            <div class="text-[#FF5F15] text-5xl md:text-6xl font-black mb-4">
+                                01
+                            </div>
+
+                            <h3 class="text-white text-3xl md:text-5xl font-black">
+                                Python
+                            </h3>
+                        </div>
+
+                    </div>
+
+                    <!-- Card 2 -->
+                    <div class="w-[80vw] sm:w-[60vw] lg:w-[35vw] max-w-[680px] h-[40vh] sm:h-[45vh] lg:h-[52vh]
+                bg-[#111] border border-[#222] rounded-[28px]
+                flex items-center justify-center text-center
+                p-8 shrink-0 transition-all duration-300 hover:border-[#FF5F15]">
+
+                        <div>
+                            <div class="text-[#FF5F15] text-5xl md:text-6xl font-black mb-4">
+                                02
+                            </div>
+
+                            <h3 class="text-white text-3xl md:text-5xl font-black">
+                                Django
+                            </h3>
+                        </div>
+
+                    </div>
+
+                    <!-- Card 3 -->
+                    <div class="w-[80vw] sm:w-[60vw] lg:w-[35vw] max-w-[680px] h-[40vh] sm:h-[45vh] lg:h-[52vh]
+                bg-[#111] border border-[#222] rounded-[28px]
+                flex items-center justify-center text-center
+                p-8 shrink-0 transition-all duration-300 hover:border-[#FF5F15]">
+
+                        <div>
+                            <div class="text-[#FF5F15] text-5xl md:text-6xl font-black mb-4">
+                                03
+                            </div>
+
+                            <h3 class="text-white text-3xl md:text-5xl font-black">
+                                FastAPI
+                            </h3>
+                        </div>
+
+                    </div>
+
+                    <!-- Card 4 -->
+                    <div class="w-[80vw] sm:w-[60vw] lg:w-[35vw] max-w-[680px] h-[40vh] sm:h-[45vh] lg:h-[52vh]
+                bg-[#111] border border-[#222] rounded-[28px]
+                flex items-center justify-center text-center
+                p-8 shrink-0 transition-all duration-300 hover:border-[#FF5F15]">
+
+                        <div>
+                            <div class="text-[#FF5F15] text-5xl md:text-6xl font-black mb-4">
+                                04
+                            </div>
+
+                            <h3 class="text-white text-3xl md:text-5xl font-black">
+                                Rest Apis
+                            </h3>
+                        </div>
+
+                    </div>
+
+                    <!-- Card 5 -->
+                    <div class="w-[80vw] sm:w-[60vw] lg:w-[35vw] max-w-[680px] h-[40vh] sm:h-[45vh] lg:h-[52vh]
+                bg-[#111] border border-[#222] rounded-[28px]
+                flex items-center justify-center text-center
+                p-8 shrink-0 transition-all duration-300 hover:border-[#FF5F15]">
+
+                        <div>
+                            <div class="text-[#FF5F15] text-5xl md:text-6xl font-black mb-4">
+                                05
+                            </div>
+
+                            <h3 class="text-white text-3xl md:text-5xl font-black">
+                                HTML
+                            </h3>
+                        </div>
+
+                    </div>
+
+                    <div class="w-[80vw] sm:w-[60vw] lg:w-[35vw] max-w-[680px] h-[40vh] sm:h-[45vh] lg:h-[52vh]
+                bg-[#111] border border-[#222] rounded-[28px]
+                flex items-center justify-center text-center
+                p-8 shrink-0 transition-all duration-300 hover:border-[#FF5F15]">
+
+                        <div>
+                            <div class="text-[#FF5F15] text-5xl md:text-6xl font-black mb-4">
+                                06
+                            </div>
+
+                            <h3 class="text-white text-3xl md:text-5xl font-black">
+                                Tailwind Css
+                            </h3>
+                        </div>
+
+                    </div>
+                    <div class="w-[80vw] sm:w-[60vw] lg:w-[35vw] max-w-[680px] h-[40vh] sm:h-[45vh] lg:h-[52vh]
+                bg-[#111] border border-[#222] rounded-[28px]
+                flex items-center justify-center text-center
+                p-8 shrink-0 transition-all duration-300 hover:border-[#FF5F15]">
+
+                        <div>
+                            <div class="text-[#FF5F15] text-5xl md:text-6xl font-black mb-4">
+                                07
+                            </div>
+
+                            <h3 class="text-white text-3xl md:text-5xl font-black">
+                                CSS
+                            </h3>
+                        </div>
+
+                    </div>
+                    <div class="w-[80vw] sm:w-[60vw] lg:w-[35vw] max-w-[680px] h-[40vh] sm:h-[45vh] lg:h-[52vh]
+                bg-[#111] border border-[#222] rounded-[28px]
+                flex items-center justify-center text-center
+                p-8 shrink-0 transition-all duration-300 hover:border-[#FF5F15]">
+
+                        <div>
+                            <div class="text-[#FF5F15] text-5xl md:text-6xl font-black mb-4">
+                                08
+                            </div>
+
+                            <h3 class="text-white text-3xl md:text-5xl font-black">
+                                JavaScript
+                            </h3>
+                        </div>
+
+                    </div>
+
+                    <div class="w-[80vw] sm:w-[60vw] lg:w-[35vw] max-w-[680px] h-[40vh] sm:h-[45vh] lg:h-[52vh]
+                bg-[#111] border border-[#222] rounded-[28px]
+                flex items-center justify-center text-center
+                p-8 shrink-0 transition-all duration-300 hover:border-[#FF5F15]">
+
+                        <div>
+                            <div class="text-[#FF5F15] text-5xl md:text-6xl font-black mb-4">
+                                09
+                            </div>
+
+                            <h3 class="text-white text-3xl md:text-5xl font-black">
+                                JQuery
+                            </h3>
+                        </div>
+
+                    </div>
+
+                </div>
+                <!-- Progress dots -->
+                <div class="progress-dots" id="progress-dots"></div>
+
+            </div>
+
+        </section>
+
+
+
+
+        <section class="relative bg-black text-white py-20 overflow-hidden">
+
+            <!-- Background Blur Effect -->
+            <div class="absolute inset-0 pointer-events-none">
+                <div class="absolute left-1/4 top-0 w-96 h-full bg-white/10 blur-[120px]"></div>
+            </div>
+
+            <div class="relative max-w-7xl mx-auto px-6 lg:px-12">
+
+                <div class="grid lg:grid-cols-[350px_1fr] gap-12">
+
+                    <!-- Left Side -->
+                    <div>
+                        <h2 class="text-7xl md:text-8xl lg:text-9xl font-black leading-none">
+                            FAQ
+                        </h2>
+
+                        <div class="mt-8">
+                            <p class="text-gray-400">
+                                Got specific questions?
+                            </p>
+
+                            <a href="#contact" class="text-[#FF5F15] font-semibold hover:underline">
+                                Contact Me
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Right Side -->
+                    <div class="space-y-4">
+
+                        <!-- Item 1 -->
+                        <div class="faq-item border border-white/10 rounded-3xl overflow-hidden">
+
+                            <button class="faq-btn w-full flex items-center justify-between text-left px-8 py-8">
+                                <span class="text-2xl md:text-4xl font-bold">
+                                    What's your typical process for a new project?
+                                </span>
+
+                                <span class="faq-icon text-[#FF5F15] text-3xl">
+                                    −
+                                </span>
+                            </button>
+
+                            <div class="faq-content px-8 pb-8">
+                                <p class="text-gray-400 text-lg max-w-4xl">
+                                    We start with a discovery phase to understand your goals,
+                                    audience, and competitors. From there, we move into
+                                    strategy, design, and development—keeping you involved
+                                    at every stage.
+                                </p>
+                            </div>
+
+                        </div>
+
+                        <!-- Item 2 -->
+                        <div class="faq-item border border-white/10 rounded-3xl overflow-hidden">
+
+                            <button class="faq-btn w-full flex items-center justify-between text-left px-8 py-8">
+                                <span class="text-2xl md:text-4xl font-bold">
+                                    How long does a project usually take?
+                                </span>
+
+                                <span class="faq-icon text-[#FF5F15] text-3xl">
+                                    +
+                                </span>
+                            </button>
+
+                            <div class="faq-content hidden px-8 pb-8">
+                                <p class="text-gray-400 text-lg">
+                                    Typical projects take between 2–8 weeks depending on
+                                    complexity, features, and feedback cycles.
+                                </p>
+                            </div>
+
+                        </div>
+
+                        <!-- Item 3 -->
+                        <div class="faq-item border border-white/10 rounded-3xl overflow-hidden">
+
+                            <button class="faq-btn w-full flex items-center justify-between text-left px-8 py-8">
+                                <span class="text-2xl md:text-4xl font-bold">
+                                    Do you offer packages or custom quotes?
+                                </span>
+
+                                <span class="faq-icon text-[#FF5F15] text-3xl">
+                                    +
+                                </span>
+                            </button>
+
+                            <div class="faq-content hidden px-8 pb-8">
+                                <p class="text-gray-400 text-lg">
+                                    Yes. Every project receives a custom quote based on
+                                    scope, requirements, and timeline.
+                                </p>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <section class="bg-black text-white py-20 overflow-hidden" id="form">
+            <div class="max-w-7xl mx-auto px-6 lg:px-12">
+
+                <div class="grid lg:grid-cols-2 gap-12 items-start">
+
+                    <!-- Left Content -->
+                    <div>
+                        <p class="text-sm uppercase tracking-wider text-gray-400 mb-6">
+                            (Contact Me)
+                        </p>
+
+                        <h2
+                            class="text-[3rem] md:text-[4rem] lg:text-[6rem] font-black uppercase leading-[0.85] tracking-tight">
+                            Get<br>
+                            In<br>
+                            Touch
+                        </h2>
+                    </div>
+
+                    <!-- Right Content -->
+                    <div>
+
+                        <form id="contactForm" action="https://formspree.io/f/mbdelnwj" method="POST"
+                            class="bg-white/[0.03] backdrop-blur-sm border border-white/10 rounded-xl p-5 md:p-6">
+
+                            <div class="grid md:grid-cols-2 gap-5 mb-5">
+                                <input type="text" name="name" required placeholder="Enter your name"
+                                    class="w-full bg-black border border-white/10 rounded-lg px-5 py-5 text-lg text-white placeholder:text-gray-500 focus:outline-none focus:border-[#FF5F15] transition">
+
+                                <input type="email" name="email" required placeholder="Email address"
+                                    class="w-full bg-black border border-white/10 rounded-lg px-5 py-5 text-lg text-white placeholder:text-gray-500 focus:outline-none focus:border-[#FF5F15] transition">
+                            </div>
+
+                            <textarea rows="5" name="message" required placeholder="Tell me about your project..."
+                                class="w-full bg-black border border-white/10 rounded-lg px-5 py-5 text-lg text-white placeholder:text-gray-500 focus:outline-none focus:border-[#FF5F15] transition resize-none mb-6"></textarea>
+
+                            <button type="submit" id="submitBtn"
+                                class="group flex items-center gap-6 border border-[#FF5F15] rounded-full px-8 py-4 text-[#FF5F15] hover:bg-[#FF5F15] hover:text-black transition-all duration-300">
+
+                                <span class="font-bold text-xl uppercase">
+                                    Send Message
+                                </span>
+
+                                <span
+                                    class="text-2xl transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-1">
+                                    ↗
+                                </span>
+                            </button>
+
+
+
+                        </form>
+
+                        <!-- Call CTA -->
+                        <p class="mt-8 text-2xl font-medium text-gray-400">
+                            Prefer to hop on a call?
+                            <a href="tel:+918129106509" class="text-[#FF5F15] hover:underline font-semibold">
+                                Schedule a Call
+                            </a>
+                            instead.
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+        </section>
+
+
+
+        <!-- ===================== Footer ===================== -->
+        <section id="contact" class="min-h-screen bg-black flex items-center px-6 md:px-12 lg:px-20 py-32">
+            <div class="max-w-4xl w-full">
+                <p class="text-[#FF5F15] uppercase tracking-[0.3em] text-sm mb-6">Get In Touch</p>
+                <h2 class="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-black text-white leading-none mb-12">
+                    Let's Work<br>
+                    <span class="text-[#FF5F15]">Together.</span>
+                </h2>
+                <div class="flex flex-col sm:flex-row gap-6">
+                    <a href="mailto:nishanthtk509@gmail.com"
+                        class="px-8 py-4 bg-[#FF5F15] text-black font-bold rounded-full text-center">
+                        Send Email
+                    </a>
+                    <a href="https://linkedin.com" target="_blank"
+                        class="px-8 py-4 border border-white text-white rounded-full text-center">
+                        LinkedIn
+                    </a>
+                </div>
+                <p class="mt-16 text-gray-600 text-sm">© 2026 Nishanth TK. All rights reserved.</p>
+            </div>
+        </section>
+
+
+
+        <!-- Success Modal -->
+        <div id="successModal"
+            class="fixed inset-0 bg-black/80 backdrop-blur-sm flex items-center justify-center z-50 opacity-0 pointer-events-none transition-all duration-500">
+
+            <div
+                class="bg-[#0f0f0f] border border-[#FF5F15]/30 rounded-3xl p-10 max-w-md w-[90%] text-center transform scale-90 transition-all duration-500">
+
+                <!-- Check Icon -->
+                <div
+                    class="w-24 h-24 mx-auto mb-6 rounded-full border-4 border-[#FF5F15] flex items-center justify-center animate-pulse">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-12 h-12 text-[#FF5F15]" fill="none"
+                        viewBox="0 0 24 24" stroke="currentColor" stroke-width="3">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+                    </svg>
+                </div>
+
+                <h3 class="text-4xl font-black uppercase text-white mb-3">
+                    Success!
+                </h3>
+
+                <p class="text-gray-400 text-lg leading-relaxed mb-8">
+                    Your message has been sent successfully.
+                    I'll get back to you as soon as possible.
+                </p>
+
+                <button id="closeModal"
+                    class="bg-[#FF5F15] text-black font-bold uppercase px-8 py-4 rounded-full hover:scale-105 transition-all duration-300">
+                    Awesome
+                </button>
+
+            </div>
         </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-
-<section>
-  <div class="profile">
-    <div class="cover"></div>
-    <div class="about-profile" id="about">
-      <div class="hero-image">
-        <img src="assets/img/image.jpg" alt="Profile Image">
-      </div>
-      <div class="about-content">
-        <p>
-          Hi, I’m Nishanth TK, a Full Stack Developer with experience since April 2024, currently working as an Associate Web Developer at Cybexel Technologies Pvt Ltd. I specialize in building dynamic and scalable web applications using Python, Django, Django REST Framework, HTML, CSS, JavaScript, and jQuery.
-
-I enjoy crafting clean, efficient code and creating seamless user experiences. My portfolio showcases projects where I’ve designed and implemented both front-end interfaces and back-end APIs, turning ideas into fully functional web solutions.
-
-I’m passionate about continuous learning and love working on projects that challenge me to grow as a developer.
-        </p>
-      </div>
-    </div>
-  </div>
-</section>
-
-
-
-<!-- <section class="cover-letter">-->
-<!--  <div class="letter-container">-->
-<!--    <h1>Hi, I'm Santhappan</h1>-->
-<!--    <p>-->
-<!--      Welcome to my digital portfolio. I am a passionate web developer and designer, blending creativity and technical skills to build intuitive, visually striking web experiences. My work revolves around modern web technologies, clean design principles, and interactive interfaces.-->
-<!--    </p>-->
-<!--    <p>-->
-<!--      I specialize in creating responsive websites, seamless user interfaces, and dynamic web applications that engage and delight users. Every project I take on is an opportunity to combine innovation with precision, turning ideas into functional, elegant solutions.-->
-<!--    </p>-->
-<!--    <p>-->
-<!--      Feel free to explore my projects, case studies, and the skills that I bring to every endeavor. I’m always excited to collaborate on projects that challenge the norm and push the boundaries of digital design.-->
-<!--    </p>-->
-<!--    <p>-->
-<!--      Let’s create something extraordinary together.-->
-<!--    </p>-->
-<!--    <p class="signature">— Santhappan</p>-->
-<!--  </div>-->
-<!--</section>-->
 
 
 
 
+    </main>
 
-<section class="experience" id="experience">
-  <h2>Experience</h2>
+    <!-- ===================== SCRIPTS ===================== -->
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
 
-  <div class="experience-section">
-    <div class="experience-text">
-      <h3>CYBEXEL TECHNOLOGIES PVT LTD</h3>
-      <p>
-        Since April 2024, I have been working as an Associate Web Developer at Cybexel Technologies Pvt Ltd, contributing to multiple web projects and building dynamic, scalable applications using Python, Django, Django REST Framework, HTML, CSS, JavaScript, and jQuery. I have designed and implemented both front-end interfaces and back-end APIs, ensuring seamless integration, responsive design, and optimal performance.
-      </p>
-      <p>
-        My work emphasizes clean, maintainable code and user-friendly experiences. I consistently deliver solutions that meet client requirements and project goals while actively learning new technologies to enhance my skill set. My portfolio showcases projects where I have successfully transformed ideas into fully functional web applications, demonstrating strong problem-solving skills and commitment to quality development.
-      </p>
-    </div>
+            /* =========================
+               MENU
+            ========================= */
+            const menuBtn = document.getElementById("menu-btn");
+            const closeBtn = document.getElementById("close-btn");
+            const menu = document.getElementById("menu");
 
-    <div class="experience-cover">
-      <div class="experience-image">
-        <img src="assets/img/cybexel.jpg" alt="CYBEXEL Technologies">
-      </div>
-    </div>
-  </div>
-</section>
+            if (menuBtn && closeBtn && menu) {
+                menuBtn.addEventListener("click", () => menu.classList.remove("translate-x-full"));
+                closeBtn.addEventListener("click", () => menu.classList.add("translate-x-full"));
+
+                // Close menu on nav link click
+                document.querySelectorAll(".menu-link").forEach(link => {
+                    link.addEventListener("click", () => menu.classList.add("translate-x-full"));
+                });
+            }
+
+            /* =========================
+               ABOUT TEXT COLOR CHANGE
+            ========================= */
+            const scrollText = document.getElementById("scroll-text");
+            if (scrollText) {
+                new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            scrollText.classList.remove("text-gray-700");
+                            scrollText.classList.add("text-white");
+                        } else {
+                            scrollText.classList.remove("text-white");
+                            scrollText.classList.add("text-gray-700");
+                        }
+                    });
+                }, { threshold: 0.4 }).observe(scrollText);
+            }
+
+            /* =========================
+               EXPERIENCE WORD ANIMATION
+            ========================= */
+            const words = document.querySelectorAll(".word");
+            const experienceSection = document.getElementById("experience");
+
+            if (experienceSection) {
+                new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            words.forEach((word, i) => {
+                                setTimeout(() => word.classList.add("show"), i * 70);
+                            });
+                        }
+                    });
+                }, { threshold: 0.3 }).observe(experienceSection);
+            }
+
+            /* =========================
+               SPOTLIGHT FOLLOW
+            ========================= */
+            const spotlight = document.getElementById("spotlight");
+            if (experienceSection && spotlight) {
+                experienceSection.addEventListener("mousemove", (e) => {
+                    const rect = experienceSection.getBoundingClientRect();
+                    spotlight.style.transform =
+                        `translate(${e.clientX - rect.left - 80}px, ${e.clientY - rect.top - 80}px)`;
+                });
+            }
+
+            /* =========================
+               PROJECT SWITCHER
+            ========================= */
+            const projects = [
+                {
+                    number: "01",
+                    title: "Cybexel Project",
+                    desc: "Django • Tailwind • API",
+                    image: "assets/img/jewellery.png",
+                    link: "https://myjewellery.goldforum.com"
+                },
+                {
+                    number: "02",
+                    title: "E-Commerce Platform",
+                    desc: "Django • PostgreSQL • Payments",
+                    image: "assets/img/spares.png",
+                    link: "https://sparescorporation.com"
+                },
+                {
+                    number: "03",
+                    title: "Portfolio Website",
+                    desc: "HTML • Tailwind • JS Animations",
+                    image: "assets/img/buysel.png",
+                    link: "https://buysel.in"
+                }
+            ];
+
+            const numberEl = document.getElementById("project-number");
+            const titleEl = document.getElementById("project-title");
+            const descEl = document.getElementById("project-desc");
+            const imageEl = document.getElementById("project-image");
+            const linkEl = document.getElementById("project-link");
+            const pinContainer = document.getElementById("pin-container");
+
+            let lastIndex = -1;
+
+            if (pinContainer) {
+                window.addEventListener("scroll", () => {
+                    const rect = pinContainer.getBoundingClientRect();
+                    const totalScroll = rect.height - window.innerHeight;
+                    let progress = Math.max(0, Math.min(1, -rect.top / totalScroll));
+                    const index = Math.min(projects.length - 1, Math.floor(progress * projects.length));
+
+                    if (index !== lastIndex) {
+                        lastIndex = index;
+                        const p = projects[index];
+
+                        imageEl.style.opacity = "0";
+                        imageEl.style.transform = "scale(1.05)";
+
+                        setTimeout(() => {
+                            numberEl.textContent = p.number;
+                            titleEl.textContent = p.title;
+                            descEl.textContent = p.desc;
+                            imageEl.src = p.image;
+                            linkEl.href = p.link;
+
+                            imageEl.style.opacity = "1";
+                            imageEl.style.transform = "scale(1)";
+                        }, 150);
+                    }
+                });
+            }
+
+            /* =========================
+               HORIZONTAL SCROLL — FIXED
+               The fix: sticky-wrap has overflow:hidden
+               JS lerp drives the track (no CSS transition on track)
+            ========================= */
+            const horizontalSection = document.getElementById("horizontal-section");
+            const track = document.getElementById("track");
+            const dotsWrap = document.getElementById("progress-dots");
+
+            if (horizontalSection && track) {
+
+                // Build progress dots
+                const cards = track.querySelectorAll(".proj-card");
+                cards.forEach((_, i) => {
+                    const d = document.createElement("div");
+                    d.className = "pdot" + (i === 0 ? " active" : "");
+                    dotsWrap.appendChild(d);
+                });
+                const dots = dotsWrap.querySelectorAll(".pdot");
+
+                let currentX = 0;
+                let targetX = 0;
+
+                function lerp(a, b, t) { return a + (b - a) * t; }
+
+                function updateDots(progress) {
+                    const index = Math.round(progress * (cards.length - 1));
+                    dots.forEach((d, i) => d.classList.toggle("active", i === index));
+                }
+
+                // rAF loop — smooth lerp, no CSS transition needed
+                function tick() {
+                    currentX = lerp(currentX, targetX, 0.08);
+                    track.style.transform = `translate3d(-${currentX}px, 0, 0)`;
+                    requestAnimationFrame(tick);
+                }
+                tick();
+
+                window.addEventListener("scroll", () => {
+                    const rect = horizontalSection.getBoundingClientRect();
+                    const scrollable = horizontalSection.offsetHeight - window.innerHeight;
+                    const progress = Math.max(0, Math.min(1, -rect.top / scrollable));
+
+                    // maxTranslate = total track width minus visible window width
+                    const maxTranslate = track.scrollWidth - window.innerWidth + (window.innerWidth * 0.15);
+                    targetX = progress * maxTranslate;
+
+                    updateDots(progress);
+                }, { passive: true });
+            }
+
+        }); // DOMContentLoaded
 
 
-<section class="projects" id="project">
-  <h2>My Works</h2>
+        /* =========================
+           PRELOADER
+        ========================= */
+        window.addEventListener("load", () => {
+            const preloader = document.getElementById("preloader");
+            const mainContent = document.getElementById("main-content");
 
-  <div class="project-grid">
-    <div class="project-card">
-      <img src="assets/img/buysel.png" alt="Buysel.in">
-      <h3>Buysel.in</h3>
-      <p>Developed a comprehensive real estate platform enabling users to buy, sell, rent, and resell properties</p>
-      <a href="https://buysel.in" target="_blank" class="btn-view">Visit Website</a>
-    </div>
+            setTimeout(() => {
+                preloader.classList.add("slide-up");
 
-    <div class="project-card">
-      <img src="assets/img/jewellery.png" alt="NME360.com">
-      <h3>My Jewellery My Design</h3>
-      <p>Built an interactive platform for showcasing jewellery with cart, wishlist, and AR-based product visualization.</p>
-      <a href="https://nme360.com" target="_blank" class="btn-view">Visit Website</a>
-    </div>
+                setTimeout(() => {
+                    mainContent.classList.remove("hidden");
+                    preloader.remove();
+                    document.body.style.overflowY = "auto";
+                    document.body.style.overflowX = "hidden";
+                }, 3000);
 
-    <div class="project-card">
-      <img src="assets/img/spares.png" alt="Sparescorporation.com">
-      <h3>Sparescorporation.com</h3>
-      <p>Developed a dynamic and modern website for showcasing furniture collections.</p>
-      <a href="https://sparescorporation.com" target="_blank" class="btn-view">Visit Website</a>
-    </div>
-  </div>
-</section>
+            }, 3000);
+        });
+    </script>
 
-  <section class="skills-parallax" id="skill">
-  <div class="skills-content">
-    <h2>My Skills</h2>
-    <div class="skills-grid">
-      <div class="skill-card">
-        <h3>Web Development</h3>
-        <p>HTML, CSS, JavaScript, Django</p>
-      </div>
-<!--      <div class="skill-card">-->
-<!--        <h3>UI/UX Design</h3>-->
-<!--        <p>Figma, Adobe XD, Responsive Design</p>-->
-<!--      </div>-->
-      <div class="skill-card">
-        <h3>Database Management</h3>
-        <p>PostgreSQL, MySQL</p>
-      </div>
-      <div class="skill-card">
-        <h3>APIs & Integrations</h3>
-        <p>REST APIs, Django REST Framework, Fast APIs</p>
-      </div>
-    </div>
-  </div>
-</section>
+    <script>
+        document.querySelectorAll(".faq-btn").forEach(button => {
+
+            button.addEventListener("click", () => {
+
+                const item = button.parentElement;
+                const content = item.querySelector(".faq-content");
+                const icon = item.querySelector(".faq-icon");
+
+                const isOpen = !content.classList.contains("hidden");
+
+                document.querySelectorAll(".faq-content").forEach(el => {
+                    el.classList.add("hidden");
+                });
+
+                document.querySelectorAll(".faq-icon").forEach(el => {
+                    el.textContent = "+";
+                });
+
+                if (!isOpen) {
+                    content.classList.remove("hidden");
+                    icon.textContent = "−";
+                }
+            });
+
+        });
+    </script>
 
 
-<section class="contact-section" id="contact">
-  <div class="contact-container">
-    <!-- Left Message Animation in Mobile Frame -->
-    <div class="contact-animation">
-      <div class="mobile-frame">
-        <div class="mobile-notch"></div>
-        <div class="message-wrapper">
-          <div class="message incoming">Hello! 👋</div>
-          <div class="message outgoing">I’m Nishanth TK. Got a project?</div>
-          <div class="message incoming">Feel free to send your message below.</div>
-        </div>
-      </div>
-    </div>
+    <script>
+        const form = document.getElementById("contactForm");
+        const status = document.getElementById("formStatus");
+        const submitBtn = document.getElementById("submitBtn");
 
-    <!-- Right Contact Form -->
-    <div class="contact-form-wrapper">
-      <h2 class="neon-text">Send Me a Message</h2>
-      <form class="contact-form">
-        <div class="form-group">
-          <input type="text" name="name" required>
-          <label>Your Name</label>
-        </div>
-        <div class="form-group">
-          <input type="email" name="email" required>
-          <label>Your Email</label>
-        </div>
-        <div class="form-group">
-          <textarea name="message" required></textarea>
-          <label>Your Message</label>
-        </div>
-        <button type="submit">Send</button>
-      </form>
-    </div>
-  </div>
-</section>
+        const modal = document.getElementById("successModal");
+        const modalContent = modal.querySelector("div");
+        const closeModal = document.getElementById("closeModal");
 
+        form.addEventListener("submit", async (e) => {
+            e.preventDefault();
 
+            submitBtn.disabled = true;
+            submitBtn.style.opacity = "0.6";
 
-<!-- Add Font Awesome CDN in <head> -->
-<link
-  rel="stylesheet"
-  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
-/>
+            status.textContent = "Sending...";
+            status.className = "mt-4 text-yellow-400";
 
-<footer class="footer">
-  <div class="footer-container">
-    <div class="footer-section">
-      <h3>Contact</h3>
-      <p>Email: <a href="mailto:nishanthtk509@gmail.com">nishanthtk509@gmail.com</a></p>
-      <p>Phone: +91 8129106509</p>
-    </div>
-    <div class="footer-section">
-      <h3>Follow Me</h3>
-      <div class="social-links">
-        <a href="https://wa.me/911234567890" target="_blank"><i class="fab fa-whatsapp"></i></a>
-        <a href="https://instagram.com/yourprofile" target="_blank"><i class="fab fa-instagram"></i></a>
-        <a href="https://linkedin.com/in/yourprofile" target="_blank"><i class="fab fa-linkedin"></i></a>
-        <a href="https://github.com/yourprofile" target="_blank"><i class="fab fa-github"></i></a>
-      </div>
-    </div>
-  </div>
-  <div class="footer-bottom">
-    <p>© 2026 Nishanth. All rights reserved.</p>
-  </div>
-</footer>
+            try {
+                const response = await fetch(form.action, {
+                    method: "POST",
+                    body: new FormData(form),
+                    headers: {
+                        Accept: "application/json"
+                    }
+                });
 
+                if (response.ok) {
 
+                    form.reset();
 
+                    status.textContent = "";
+                    status.className = "";
 
-  <script src="assets/js/scripts.js"></script>
+                    // Show modal
+                    modal.classList.remove(
+                        "opacity-0",
+                        "pointer-events-none"
+                    );
+
+                    setTimeout(() => {
+                        modalContent.classList.remove("scale-90");
+                        modalContent.classList.add("scale-100");
+                    }, 10);
+
+                    // Auto close after 4 seconds
+                    setTimeout(() => {
+                        closeSuccessModal();
+                    }, 4000);
+
+                } else {
+                    status.textContent =
+                        "Something went wrong. Please try again.";
+                    status.className = "mt-4 text-red-400";
+                }
+
+            } catch (error) {
+                status.textContent =
+                    "Network error. Please check your connection.";
+                status.className = "mt-4 text-red-400";
+            }
+
+            submitBtn.disabled = false;
+            submitBtn.style.opacity = "1";
+        });
+
+        function closeSuccessModal() {
+            modalContent.classList.remove("scale-100");
+            modalContent.classList.add("scale-90");
+
+            setTimeout(() => {
+                modal.classList.add(
+                    "opacity-0",
+                    "pointer-events-none"
+                );
+            }, 300);
+        }
+
+        closeModal.addEventListener("click", closeSuccessModal);
+
+        // Close when clicking outside
+        modal.addEventListener("click", (e) => {
+            if (e.target === modal) {
+                closeSuccessModal();
+            }
+        });
+    </script>
+
 </body>
 
 </html>
-
-
-
-
-
-
-
-
-
