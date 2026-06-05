@@ -41,7 +41,6 @@
         ===================== */
         #horizontal-section {
             position: relative;
-            /* height is set dynamically by JS based on track width */
             background: #000;
         }
 
@@ -50,7 +49,6 @@
             top: 0;
             height: 100vh;
             overflow: hidden;
-            /* ← THE KEY FIX */
             display: flex;
             align-items: center;
         }
@@ -60,11 +58,7 @@
             gap: 32px;
             padding: 0 15vw;
             will-change: transform;
-            /* NO CSS transition — JS lerp handles smoothness */
         }
-
-        /* Project cards */
-
 
         .proj-card:hover {
             border-color: #FF5F15;
@@ -80,14 +74,6 @@
             font-size: 5rem;
             overflow: hidden;
         }
-
-        /* .proj-card-bg img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            opacity: 0.5;
-            transition: opacity 0.4s, transform 0.4s;
-        } */
 
         .proj-card:hover .proj-card-bg img {
             opacity: 0.7;
@@ -132,7 +118,6 @@
             transform: scale(1.5);
         }
 
-        /* Image transition for project switcher */
         #project-image {
             transition: opacity 0.3s ease, transform 0.3s ease;
         }
@@ -144,6 +129,114 @@
 
         .hide-scrollbar::-webkit-scrollbar {
             display: none;
+        }
+
+        /* =====================
+           MOBILE GAP FIXES
+        ===================== */
+
+        /* Remove excessive vertical padding on mobile */
+        @media (max-width: 767px) {
+
+            /* Hero section — no full screen height on mobile */
+            #home {
+                min-height: auto !important;
+                padding-top: 100px !important;
+                padding-bottom: 60px !important;
+            }
+
+            /* About section */
+            #about {
+                padding-top: 48px !important;
+                padding-bottom: 48px !important;
+            }
+
+            /* About sticky text — remove tall empty space */
+            #about .h-\[50vh\] {
+                height: auto !important;
+                min-height: 0 !important;
+            }
+
+            /* Experience section */
+            #experience {
+                padding-top: 48px !important;
+                padding-bottom: 48px !important;
+            }
+
+            /* Experience grid height on mobile */
+            #experience .h-\[80vh\] {
+                height: auto !important;
+            }
+
+            /* FAQ section */
+            .relative.bg-black.text-white.py-20 {
+                padding-top: 48px !important;
+                padding-bottom: 48px !important;
+            }
+
+            /* Contact form section */
+            #form {
+                padding-top: 48px !important;
+                padding-bottom: 48px !important;
+            }
+
+            /* Footer / Get In Touch section */
+            #contact {
+                min-height: auto !important;
+                padding-top: 60px !important;
+                padding-bottom: 60px !important;
+            }
+
+            /* Pin container for project switcher — reduce height */
+            #pin-container {
+                height: 280vh !important;
+            }
+
+            /* Horizontal scroll section — reduce height */
+            #horizontal-section {
+                height: 300vw !important;
+            }
+
+            /* FAQ text size on mobile */
+            .faq-btn span.text-2xl {
+                font-size: 1.1rem !important;
+                line-height: 1.4 !important;
+            }
+
+            /* FAQ padding reduce */
+            .faq-btn {
+                padding: 1.25rem !important;
+            }
+
+            .faq-content {
+                padding-left: 1.25rem !important;
+                padding-right: 1.25rem !important;
+                padding-bottom: 1.25rem !important;
+            }
+
+            /* Contact form call CTA text */
+            #form .text-2xl {
+                font-size: 1rem !important;
+            }
+        }
+
+        /* Small phones */
+        @media (max-width: 480px) {
+            #home {
+                padding-top: 88px !important;
+                padding-bottom: 48px !important;
+            }
+
+            #contact {
+                padding-top: 48px !important;
+                padding-bottom: 48px !important;
+            }
+
+            /* Experience right column text */
+            #experience .text-2xl {
+                font-size: 1.35rem !important;
+                line-height: 1.3 !important;
+            }
         }
     </style>
 </head>
@@ -190,19 +283,17 @@
                     class="menu-link text-black text-4xl md:text-6xl font-black uppercase tracking-wider">Projects</a>
                 <a href="#form"
                     class="menu-link text-black text-4xl md:text-6xl font-black uppercase tracking-wider">Contact</a>
-
                 <a href="assets/pdf/NISHANTH TK.pdf" download
                     class="menu-link text-black text-4xl md:text-6xl font-black uppercase tracking-wider flex items-center gap-3">
                     Resume
-                   
                 </a>
-
             </div>
         </div>
 
         <!-- ===================== HERO ===================== -->
+        <!-- Changed: min-h-screen → py-28 md:min-h-screen on mobile to avoid huge blank gap -->
         <section id="home"
-            class="min-h-screen flex items-center justify-center lg:justify-start px-6 md:px-12 lg:px-20">
+            class="py-28 md:min-h-screen flex items-center justify-center lg:justify-start px-6 md:px-12 lg:px-20">
             <div class="max-w-5xl">
                 <div class="flex items-center gap-4 mb-6">
                     <span class="w-12 h-[2px] bg-[#FF5F15]"></span>
@@ -232,12 +323,14 @@
         </section>
 
         <!-- ===================== ABOUT ===================== -->
-        <section id="about" class="bg-black px-6 md:px-12 py-12">
+        <!-- Changed: h-[50vh] scroll effect container replaced with auto height on mobile -->
+        <section id="about" class="bg-black px-6 md:px-12 py-12 md:py-16">
             <div class="max-w-6xl mx-auto">
                 <p class="text-[#FF5F15] uppercase tracking-[0.3em] text-sm mb-10">About</p>
-                <div class="h-[50vh] relative">
+                <!-- Removed h-[50vh] wrapper — caused massive blank gap on mobile -->
+                <div class="md:h-[50vh] relative">
                     <p id="scroll-text"
-                        class="sticky top-32 text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold leading-tight text-gray-700 transition-all duration-300">
+                        class="md:sticky top-32 text-2xl sm:text-3xl md:text-5xl lg:text-6xl xl:text-7xl font-bold leading-tight text-gray-700 transition-all duration-300">
                         I build modern digital experiences that combine clean design,
                         performance, and functionality to create products that users love.
                     </p>
@@ -245,37 +338,31 @@
             </div>
         </section>
 
-        <section id="experience" class="bg-black px-6 md:px-12 py-20">
-
+        <!-- ===================== EXPERIENCE ===================== -->
+        <!-- Changed: h-[80vh] grid → auto height on mobile -->
+        <section id="experience" class="bg-black px-6 md:px-12 py-12 md:py-20">
             <div class="max-w-7xl mx-auto">
-
                 <p class="text-[#FF5F15] uppercase tracking-[0.3em] text-sm mb-8">
                     Experience
                 </p>
 
-                <div class="grid lg:grid-cols-2 gap-12 h-[80vh]">
+                <div class="grid lg:grid-cols-2 gap-8 lg:gap-12 lg:h-[80vh]">
 
                     <!-- LEFT IMAGE -->
                     <div class="hidden lg:block h-full">
-
                         <div class="relative h-full rounded-3xl overflow-hidden">
-
                             <img src="assets/img/cybexel.png" class="absolute inset-0 w-full h-full object-cover">
-
                             <div class="absolute inset-0 bg-black/20"></div>
-
                         </div>
-
                     </div>
 
                     <!-- MOBILE IMAGE -->
-                    <div class="lg:hidden h-[250px] rounded-3xl overflow-hidden">
+                    <div class="lg:hidden h-[220px] rounded-3xl overflow-hidden">
                         <img src="assets/img/cybexel.png" class="w-full h-full object-cover">
                     </div>
 
                     <div class="h-full overflow-y-auto hide-scrollbar py-4">
-
-                        <p class="text-2xl sm:text-3xl md:text-5xl lg:text-6xl font-black text-white leading-[1.2]">
+                        <p class="text-xl sm:text-2xl md:text-3xl lg:text-5xl xl:text-6xl font-black text-white leading-[1.2]">
                             Hi, I'm <span class="text-[#FF5F15]">Nishanth TK</span>, a Full Stack Developer specializing
                             in Python, Django, Django REST Framework, JavaScript, HTML, and CSS.
                             With <span class="text-[#FF5F15]">2 years of experience</span>, I build responsive user
@@ -284,25 +371,23 @@
                             to April 2026, developing modern web applications, REST APIs, and user-focused digital
                             solutions.
                         </p>
-
                     </div>
 
                 </div>
-
             </div>
-
         </section>
 
 
-        <!-- ===================== SELECTED WORK (PROJECT SWITCHER) ===================== -->
+        <!-- ===================== SELECTED WORK ===================== -->
         <section id="work" class="bg-black">
             <div class="max-w-7xl mx-auto px-6 md:px-12">
                 <p class="text-[#FF5F15] uppercase tracking-[0.3em] text-sm mb-10">Selected Works</p>
             </div>
 
-            <div id="pin-container" class="relative h-[120vh]">
+            <!-- Changed: h-[120vh] → h-[240vh] on mobile for better scroll feel -->
+            <div id="pin-container" class="relative h-[240vh] md:h-[160vh] lg:h-[120vh]">
                 <div class="sticky top-0 h-screen flex items-center bg-black">
-                    <div class="max-w-7xl mx-auto w-full grid lg:grid-cols-2 gap-16 items-center px-6 md:px-12">
+                    <div class="max-w-7xl mx-auto w-full grid lg:grid-cols-2 gap-8 lg:gap-16 items-center px-6 md:px-12">
 
                         <!-- LEFT NUMBER -->
                         <div>
@@ -316,16 +401,16 @@
                         <div>
                             <div class="overflow-hidden rounded-3xl">
                                 <img id="project-image" src="assets/img/buysel.png"
-                                    class="w-full h-[260px] md:h-[380px] object-cover">
+                                    class="w-full h-[200px] sm:h-[260px] md:h-[320px] lg:h-[380px] object-cover">
                             </div>
-                            <h2 id="project-title" class="text-white text-3xl md:text-5xl font-black mt-6">
+                            <h2 id="project-title" class="text-white text-2xl md:text-4xl lg:text-5xl font-black mt-4 md:mt-6">
                                 Buysel
                             </h2>
-                            <p id="project-desc" class="text-gray-500 mt-4">
+                            <p id="project-desc" class="text-gray-500 mt-3">
                                 Django • Tailwind • API
                             </p>
                             <a id="project-link" href="https://buysel.in" target="_blank"
-                                class="inline-block mt-6 text-[#FF5F15] font-semibold hover:underline">
+                                class="inline-block mt-4 md:mt-6 text-[#FF5F15] font-semibold hover:underline">
                                 View Project
                             </a>
                         </div>
@@ -335,376 +420,249 @@
             </div>
         </section>
 
-        <!-- ===================== HORIZONTAL PROJECTS SCROLL (FIXED) ===================== -->
+        <!-- ===================== HORIZONTAL PROJECTS SCROLL ===================== -->
         <section id="horizontal-section">
-
             <div class="sticky-wrap">
-
-                <!-- Section label -->
                 <div class="absolute top-10 left-6 md:left-12 z-20">
                     <p class="text-[#FF5F15] uppercase tracking-[0.3em] text-sm mb-1">Skills</p>
-
                 </div>
 
-                <!-- Scrolling track -->
                 <div id="track" class="flex gap-6 px-6 md:px-12">
 
-                    <!-- Card 1 -->
                     <div class="w-[80vw] sm:w-[60vw] lg:w-[35vw] max-w-[680px] h-[40vh] sm:h-[45vh] lg:h-[52vh]
                 bg-[#111] border border-[#222] rounded-[28px]
                 flex items-center justify-center text-center
                 p-8 shrink-0 transition-all duration-300 hover:border-[#FF5F15]">
-
                         <div>
-                            <div class="text-[#FF5F15] text-5xl md:text-6xl font-black mb-4">
-                                01
-                            </div>
-
-                            <h3 class="text-white text-3xl md:text-5xl font-black">
-                                Python
-                            </h3>
+                            <div class="text-[#FF5F15] text-5xl md:text-6xl font-black mb-4">01</div>
+                            <h3 class="text-white text-3xl md:text-5xl font-black">Python</h3>
                         </div>
-
-                    </div>
-
-                    <!-- Card 2 -->
-                    <div class="w-[80vw] sm:w-[60vw] lg:w-[35vw] max-w-[680px] h-[40vh] sm:h-[45vh] lg:h-[52vh]
-                bg-[#111] border border-[#222] rounded-[28px]
-                flex items-center justify-center text-center
-                p-8 shrink-0 transition-all duration-300 hover:border-[#FF5F15]">
-
-                        <div>
-                            <div class="text-[#FF5F15] text-5xl md:text-6xl font-black mb-4">
-                                02
-                            </div>
-
-                            <h3 class="text-white text-3xl md:text-5xl font-black">
-                                Django
-                            </h3>
-                        </div>
-
-                    </div>
-
-                    <!-- Card 3 -->
-                    <div class="w-[80vw] sm:w-[60vw] lg:w-[35vw] max-w-[680px] h-[40vh] sm:h-[45vh] lg:h-[52vh]
-                bg-[#111] border border-[#222] rounded-[28px]
-                flex items-center justify-center text-center
-                p-8 shrink-0 transition-all duration-300 hover:border-[#FF5F15]">
-
-                        <div>
-                            <div class="text-[#FF5F15] text-5xl md:text-6xl font-black mb-4">
-                                03
-                            </div>
-
-                            <h3 class="text-white text-3xl md:text-5xl font-black">
-                                FastAPI
-                            </h3>
-                        </div>
-
-                    </div>
-
-                    <!-- Card 4 -->
-                    <div class="w-[80vw] sm:w-[60vw] lg:w-[35vw] max-w-[680px] h-[40vh] sm:h-[45vh] lg:h-[52vh]
-                bg-[#111] border border-[#222] rounded-[28px]
-                flex items-center justify-center text-center
-                p-8 shrink-0 transition-all duration-300 hover:border-[#FF5F15]">
-
-                        <div>
-                            <div class="text-[#FF5F15] text-5xl md:text-6xl font-black mb-4">
-                                04
-                            </div>
-
-                            <h3 class="text-white text-3xl md:text-5xl font-black">
-                                Rest Apis
-                            </h3>
-                        </div>
-
-                    </div>
-
-                    <!-- Card 5 -->
-                    <div class="w-[80vw] sm:w-[60vw] lg:w-[35vw] max-w-[680px] h-[40vh] sm:h-[45vh] lg:h-[52vh]
-                bg-[#111] border border-[#222] rounded-[28px]
-                flex items-center justify-center text-center
-                p-8 shrink-0 transition-all duration-300 hover:border-[#FF5F15]">
-
-                        <div>
-                            <div class="text-[#FF5F15] text-5xl md:text-6xl font-black mb-4">
-                                05
-                            </div>
-
-                            <h3 class="text-white text-3xl md:text-5xl font-black">
-                                HTML
-                            </h3>
-                        </div>
-
                     </div>
 
                     <div class="w-[80vw] sm:w-[60vw] lg:w-[35vw] max-w-[680px] h-[40vh] sm:h-[45vh] lg:h-[52vh]
                 bg-[#111] border border-[#222] rounded-[28px]
                 flex items-center justify-center text-center
                 p-8 shrink-0 transition-all duration-300 hover:border-[#FF5F15]">
-
                         <div>
-                            <div class="text-[#FF5F15] text-5xl md:text-6xl font-black mb-4">
-                                06
-                            </div>
-
-                            <h3 class="text-white text-3xl md:text-5xl font-black">
-                                Tailwind Css
-                            </h3>
+                            <div class="text-[#FF5F15] text-5xl md:text-6xl font-black mb-4">02</div>
+                            <h3 class="text-white text-3xl md:text-5xl font-black">Django</h3>
                         </div>
-
-                    </div>
-                    <div class="w-[80vw] sm:w-[60vw] lg:w-[35vw] max-w-[680px] h-[40vh] sm:h-[45vh] lg:h-[52vh]
-                bg-[#111] border border-[#222] rounded-[28px]
-                flex items-center justify-center text-center
-                p-8 shrink-0 transition-all duration-300 hover:border-[#FF5F15]">
-
-                        <div>
-                            <div class="text-[#FF5F15] text-5xl md:text-6xl font-black mb-4">
-                                07
-                            </div>
-
-                            <h3 class="text-white text-3xl md:text-5xl font-black">
-                                CSS
-                            </h3>
-                        </div>
-
-                    </div>
-                    <div class="w-[80vw] sm:w-[60vw] lg:w-[35vw] max-w-[680px] h-[40vh] sm:h-[45vh] lg:h-[52vh]
-                bg-[#111] border border-[#222] rounded-[28px]
-                flex items-center justify-center text-center
-                p-8 shrink-0 transition-all duration-300 hover:border-[#FF5F15]">
-
-                        <div>
-                            <div class="text-[#FF5F15] text-5xl md:text-6xl font-black mb-4">
-                                08
-                            </div>
-
-                            <h3 class="text-white text-3xl md:text-5xl font-black">
-                                JavaScript
-                            </h3>
-                        </div>
-
                     </div>
 
                     <div class="w-[80vw] sm:w-[60vw] lg:w-[35vw] max-w-[680px] h-[40vh] sm:h-[45vh] lg:h-[52vh]
                 bg-[#111] border border-[#222] rounded-[28px]
                 flex items-center justify-center text-center
                 p-8 shrink-0 transition-all duration-300 hover:border-[#FF5F15]">
-
                         <div>
-                            <div class="text-[#FF5F15] text-5xl md:text-6xl font-black mb-4">
-                                09
-                            </div>
-
-                            <h3 class="text-white text-3xl md:text-5xl font-black">
-                                JQuery
-                            </h3>
+                            <div class="text-[#FF5F15] text-5xl md:text-6xl font-black mb-4">03</div>
+                            <h3 class="text-white text-3xl md:text-5xl font-black">FastAPI</h3>
                         </div>
+                    </div>
 
+                    <div class="w-[80vw] sm:w-[60vw] lg:w-[35vw] max-w-[680px] h-[40vh] sm:h-[45vh] lg:h-[52vh]
+                bg-[#111] border border-[#222] rounded-[28px]
+                flex items-center justify-center text-center
+                p-8 shrink-0 transition-all duration-300 hover:border-[#FF5F15]">
+                        <div>
+                            <div class="text-[#FF5F15] text-5xl md:text-6xl font-black mb-4">04</div>
+                            <h3 class="text-white text-3xl md:text-5xl font-black">Rest Apis</h3>
+                        </div>
+                    </div>
+
+                    <div class="w-[80vw] sm:w-[60vw] lg:w-[35vw] max-w-[680px] h-[40vh] sm:h-[45vh] lg:h-[52vh]
+                bg-[#111] border border-[#222] rounded-[28px]
+                flex items-center justify-center text-center
+                p-8 shrink-0 transition-all duration-300 hover:border-[#FF5F15]">
+                        <div>
+                            <div class="text-[#FF5F15] text-5xl md:text-6xl font-black mb-4">05</div>
+                            <h3 class="text-white text-3xl md:text-5xl font-black">HTML</h3>
+                        </div>
+                    </div>
+
+                    <div class="w-[80vw] sm:w-[60vw] lg:w-[35vw] max-w-[680px] h-[40vh] sm:h-[45vh] lg:h-[52vh]
+                bg-[#111] border border-[#222] rounded-[28px]
+                flex items-center justify-center text-center
+                p-8 shrink-0 transition-all duration-300 hover:border-[#FF5F15]">
+                        <div>
+                            <div class="text-[#FF5F15] text-5xl md:text-6xl font-black mb-4">06</div>
+                            <h3 class="text-white text-3xl md:text-5xl font-black">Tailwind Css</h3>
+                        </div>
+                    </div>
+
+                    <div class="w-[80vw] sm:w-[60vw] lg:w-[35vw] max-w-[680px] h-[40vh] sm:h-[45vh] lg:h-[52vh]
+                bg-[#111] border border-[#222] rounded-[28px]
+                flex items-center justify-center text-center
+                p-8 shrink-0 transition-all duration-300 hover:border-[#FF5F15]">
+                        <div>
+                            <div class="text-[#FF5F15] text-5xl md:text-6xl font-black mb-4">07</div>
+                            <h3 class="text-white text-3xl md:text-5xl font-black">CSS</h3>
+                        </div>
+                    </div>
+
+                    <div class="w-[80vw] sm:w-[60vw] lg:w-[35vw] max-w-[680px] h-[40vh] sm:h-[45vh] lg:h-[52vh]
+                bg-[#111] border border-[#222] rounded-[28px]
+                flex items-center justify-center text-center
+                p-8 shrink-0 transition-all duration-300 hover:border-[#FF5F15]">
+                        <div>
+                            <div class="text-[#FF5F15] text-5xl md:text-6xl font-black mb-4">08</div>
+                            <h3 class="text-white text-3xl md:text-5xl font-black">JavaScript</h3>
+                        </div>
+                    </div>
+
+                    <div class="w-[80vw] sm:w-[60vw] lg:w-[35vw] max-w-[680px] h-[40vh] sm:h-[45vh] lg:h-[52vh]
+                bg-[#111] border border-[#222] rounded-[28px]
+                flex items-center justify-center text-center
+                p-8 shrink-0 transition-all duration-300 hover:border-[#FF5F15]">
+                        <div>
+                            <div class="text-[#FF5F15] text-5xl md:text-6xl font-black mb-4">09</div>
+                            <h3 class="text-white text-3xl md:text-5xl font-black">JQuery</h3>
+                        </div>
                     </div>
 
                 </div>
-                <!-- Progress dots -->
                 <div class="progress-dots" id="progress-dots"></div>
-
             </div>
-
         </section>
 
 
-
-
-        <section class="relative bg-black text-white py-20 overflow-hidden">
-
-            <!-- Background Blur Effect -->
+        <!-- ===================== FAQ ===================== -->
+        <section class="relative bg-black text-white py-12 md:py-20 overflow-hidden">
             <div class="absolute inset-0 pointer-events-none">
                 <div class="absolute left-1/4 top-0 w-96 h-full bg-white/10 blur-[120px]"></div>
             </div>
 
             <div class="relative max-w-7xl mx-auto px-6 lg:px-12">
-
-                <div class="grid lg:grid-cols-[350px_1fr] gap-12">
+                <div class="grid lg:grid-cols-[350px_1fr] gap-8 lg:gap-12">
 
                     <!-- Left Side -->
                     <div>
-                        <h2 class="text-7xl md:text-8xl lg:text-9xl font-black leading-none">
+                        <h2 class="text-6xl md:text-8xl lg:text-9xl font-black leading-none">
                             FAQ
                         </h2>
-
-                        <div class="mt-8">
-                            <p class="text-gray-400">
-                                Got specific questions?
-                            </p>
-
-                            <a href="#contact" class="text-[#FF5F15] font-semibold hover:underline">
-                                Contact Me
-                            </a>
+                        <div class="mt-6 md:mt-8">
+                            <p class="text-gray-400">Got specific questions?</p>
+                            <a href="#contact" class="text-[#FF5F15] font-semibold hover:underline">Contact Me</a>
                         </div>
                     </div>
 
                     <!-- Right Side -->
                     <div class="space-y-4">
 
-                        <!-- Item 1 -->
                         <div class="faq-item border border-white/10 rounded-3xl overflow-hidden">
-
-                            <button class="faq-btn w-full flex items-center justify-between text-left px-8 py-8">
-                                <span class="text-2xl md:text-4xl font-bold">
+                            <button class="faq-btn w-full flex items-center justify-between text-left px-5 md:px-8 py-5 md:py-8">
+                                <span class="text-lg md:text-2xl lg:text-4xl font-bold pr-4">
                                     What's your typical process for a new project?
                                 </span>
-
-                                <span class="faq-icon text-[#FF5F15] text-3xl">
-                                    −
-                                </span>
+                                <span class="faq-icon text-[#FF5F15] text-3xl shrink-0">−</span>
                             </button>
-
-                            <div class="faq-content px-8 pb-8">
-                                <p class="text-gray-400 text-lg max-w-4xl">
+                            <div class="faq-content px-5 md:px-8 pb-5 md:pb-8">
+                                <p class="text-gray-400 text-base md:text-lg max-w-4xl">
                                     We start with a discovery phase to understand your goals,
                                     audience, and competitors. From there, we move into
                                     strategy, design, and development—keeping you involved
                                     at every stage.
                                 </p>
                             </div>
-
                         </div>
 
-                        <!-- Item 2 -->
                         <div class="faq-item border border-white/10 rounded-3xl overflow-hidden">
-
-                            <button class="faq-btn w-full flex items-center justify-between text-left px-8 py-8">
-                                <span class="text-2xl md:text-4xl font-bold">
+                            <button class="faq-btn w-full flex items-center justify-between text-left px-5 md:px-8 py-5 md:py-8">
+                                <span class="text-lg md:text-2xl lg:text-4xl font-bold pr-4">
                                     How long does a project usually take?
                                 </span>
-
-                                <span class="faq-icon text-[#FF5F15] text-3xl">
-                                    +
-                                </span>
+                                <span class="faq-icon text-[#FF5F15] text-3xl shrink-0">+</span>
                             </button>
-
-                            <div class="faq-content hidden px-8 pb-8">
-                                <p class="text-gray-400 text-lg">
+                            <div class="faq-content hidden px-5 md:px-8 pb-5 md:pb-8">
+                                <p class="text-gray-400 text-base md:text-lg">
                                     Typical projects take between 2–8 weeks depending on
                                     complexity, features, and feedback cycles.
                                 </p>
                             </div>
-
                         </div>
 
-                        <!-- Item 3 -->
                         <div class="faq-item border border-white/10 rounded-3xl overflow-hidden">
-
-                            <button class="faq-btn w-full flex items-center justify-between text-left px-8 py-8">
-                                <span class="text-2xl md:text-4xl font-bold">
+                            <button class="faq-btn w-full flex items-center justify-between text-left px-5 md:px-8 py-5 md:py-8">
+                                <span class="text-lg md:text-2xl lg:text-4xl font-bold pr-4">
                                     Do you offer packages or custom quotes?
                                 </span>
-
-                                <span class="faq-icon text-[#FF5F15] text-3xl">
-                                    +
-                                </span>
+                                <span class="faq-icon text-[#FF5F15] text-3xl shrink-0">+</span>
                             </button>
-
-                            <div class="faq-content hidden px-8 pb-8">
-                                <p class="text-gray-400 text-lg">
+                            <div class="faq-content hidden px-5 md:px-8 pb-5 md:pb-8">
+                                <p class="text-gray-400 text-base md:text-lg">
                                     Yes. Every project receives a custom quote based on
                                     scope, requirements, and timeline.
                                 </p>
                             </div>
-
                         </div>
 
                     </div>
-
                 </div>
-
             </div>
-
         </section>
 
 
-
-        <section class="bg-black text-white py-20 overflow-hidden" id="form">
+        <!-- ===================== CONTACT FORM ===================== -->
+        <section class="bg-black text-white py-12 md:py-20 overflow-hidden" id="form">
             <div class="max-w-7xl mx-auto px-6 lg:px-12">
+                <div class="grid lg:grid-cols-2 gap-8 lg:gap-12 items-start">
 
-                <div class="grid lg:grid-cols-2 gap-12 items-start">
-
-                    <!-- Left Content -->
+                    <!-- Left -->
                     <div>
-                        <p class="text-sm uppercase tracking-wider text-gray-400 mb-6">
+                        <p class="text-sm uppercase tracking-wider text-gray-400 mb-4 md:mb-6">
                             (Contact Me)
                         </p>
-
-                        <h2
-                            class="text-[3rem] md:text-[4rem] lg:text-[6rem] font-black uppercase leading-[0.85] tracking-tight">
-                            Get<br>
-                            In<br>
-                            Touch
+                        <h2 class="text-[2.5rem] md:text-[4rem] lg:text-[6rem] font-black uppercase leading-[0.85] tracking-tight">
+                            Get<br>In<br>Touch
                         </h2>
                     </div>
 
-                    <!-- Right Content -->
+                    <!-- Right -->
                     <div>
-
                         <form id="contactForm" action="https://formspree.io/f/mbdelnwj" method="POST"
-                            class="bg-white/[0.03] backdrop-blur-sm border border-white/10 rounded-xl p-5 md:p-6">
+                            class="bg-white/[0.03] backdrop-blur-sm border border-white/10 rounded-xl p-4 md:p-6">
 
-                            <div class="grid md:grid-cols-2 gap-5 mb-5">
+                            <div class="grid md:grid-cols-2 gap-4 md:gap-5 mb-4 md:mb-5">
                                 <input type="text" name="name" required placeholder="Enter your name"
-                                    class="w-full bg-black border border-white/10 rounded-lg px-5 py-5 text-lg text-white placeholder:text-gray-500 focus:outline-none focus:border-[#FF5F15] transition">
-
+                                    class="w-full bg-black border border-white/10 rounded-lg px-4 md:px-5 py-4 md:py-5 text-base md:text-lg text-white placeholder:text-gray-500 focus:outline-none focus:border-[#FF5F15] transition">
                                 <input type="email" name="email" required placeholder="Email address"
-                                    class="w-full bg-black border border-white/10 rounded-lg px-5 py-5 text-lg text-white placeholder:text-gray-500 focus:outline-none focus:border-[#FF5F15] transition">
+                                    class="w-full bg-black border border-white/10 rounded-lg px-4 md:px-5 py-4 md:py-5 text-base md:text-lg text-white placeholder:text-gray-500 focus:outline-none focus:border-[#FF5F15] transition">
                             </div>
 
-                            <textarea rows="5" name="message" required placeholder="Tell me about your project..."
-                                class="w-full bg-black border border-white/10 rounded-lg px-5 py-5 text-lg text-white placeholder:text-gray-500 focus:outline-none focus:border-[#FF5F15] transition resize-none mb-6"></textarea>
+                            <textarea rows="4" name="message" required placeholder="Tell me about your project..."
+                                class="w-full bg-black border border-white/10 rounded-lg px-4 md:px-5 py-4 md:py-5 text-base md:text-lg text-white placeholder:text-gray-500 focus:outline-none focus:border-[#FF5F15] transition resize-none mb-5 md:mb-6"></textarea>
 
                             <button type="submit" id="submitBtn"
-                                class="group flex items-center gap-6 border border-[#FF5F15] rounded-full px-8 py-4 text-[#FF5F15] hover:bg-[#FF5F15] hover:text-black transition-all duration-300">
-
-                                <span class="font-bold text-xl uppercase">
-                                    Send Message
-                                </span>
-
-                                <span
-                                    class="text-2xl transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-1">
-                                    ↗
-                                </span>
+                                class="group flex items-center gap-4 md:gap-6 border border-[#FF5F15] rounded-full px-6 md:px-8 py-3 md:py-4 text-[#FF5F15] hover:bg-[#FF5F15] hover:text-black transition-all duration-300">
+                                <span class="font-bold text-lg md:text-xl uppercase">Send Message</span>
+                                <span class="text-2xl transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-1">↗</span>
                             </button>
-
-
 
                         </form>
 
-                        <!-- Call CTA -->
-                        <p class="mt-8 text-2xl font-medium text-gray-400">
+                        <p class="mt-6 md:mt-8 text-lg md:text-2xl font-medium text-gray-400">
                             Prefer to hop on a call?
                             <a href="tel:+918129106509" class="text-[#FF5F15] hover:underline font-semibold">
                                 Schedule a Call
                             </a>
                             instead.
                         </p>
-
                     </div>
 
                 </div>
-
             </div>
         </section>
 
 
-
-        <!-- ===================== Footer ===================== -->
-        <section id="contact" class="min-h-screen bg-black flex items-center px-6 md:px-12 lg:px-20 py-32">
+        <!-- ===================== FOOTER ===================== -->
+        <!-- Changed: min-h-screen → py-20 md:min-h-screen to kill the huge blank footer on mobile -->
+        <section id="contact" class="py-16 md:min-h-screen bg-black flex items-center px-6 md:px-12 lg:px-20 md:py-32">
             <div class="max-w-4xl w-full">
                 <p class="text-[#FF5F15] uppercase tracking-[0.3em] text-sm mb-6">Get In Touch</p>
-                <h2 class="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-black text-white leading-none mb-12">
+                <h2 class="text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-black text-white leading-none mb-8 md:mb-12">
                     Let's Work<br>
                     <span class="text-[#FF5F15]">Together.</span>
                 </h2>
-                <div class="flex flex-col sm:flex-row gap-6">
+                <div class="flex flex-col sm:flex-row gap-4 md:gap-6">
                     <a href="mailto:nishanthtk509@gmail.com"
                         class="px-8 py-4 bg-[#FF5F15] text-black font-bold rounded-full text-center">
                         Send Email
@@ -714,47 +672,32 @@
                         LinkedIn
                     </a>
                 </div>
-                <p class="mt-16 text-gray-600 text-sm">© 2026 Nishanth TK. All rights reserved.</p>
+                <p class="mt-10 md:mt-16 text-gray-600 text-sm">© 2026 Nishanth TK. All rights reserved.</p>
             </div>
         </section>
-
 
 
         <!-- Success Modal -->
         <div id="successModal"
             class="fixed inset-0 bg-black/80 backdrop-blur-sm flex items-center justify-center z-50 opacity-0 pointer-events-none transition-all duration-500">
-
-            <div
-                class="bg-[#0f0f0f] border border-[#FF5F15]/30 rounded-3xl p-10 max-w-md w-[90%] text-center transform scale-90 transition-all duration-500">
-
-                <!-- Check Icon -->
-                <div
-                    class="w-24 h-24 mx-auto mb-6 rounded-full border-4 border-[#FF5F15] flex items-center justify-center animate-pulse">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="w-12 h-12 text-[#FF5F15]" fill="none"
+            <div class="bg-[#0f0f0f] border border-[#FF5F15]/30 rounded-3xl p-8 md:p-10 max-w-md w-[90%] text-center transform scale-90 transition-all duration-500">
+                <div class="w-20 h-20 md:w-24 md:h-24 mx-auto mb-6 rounded-full border-4 border-[#FF5F15] flex items-center justify-center animate-pulse">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-10 h-10 md:w-12 md:h-12 text-[#FF5F15]" fill="none"
                         viewBox="0 0 24 24" stroke="currentColor" stroke-width="3">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
                     </svg>
                 </div>
-
-                <h3 class="text-4xl font-black uppercase text-white mb-3">
-                    Success!
-                </h3>
-
-                <p class="text-gray-400 text-lg leading-relaxed mb-8">
+                <h3 class="text-3xl md:text-4xl font-black uppercase text-white mb-3">Success!</h3>
+                <p class="text-gray-400 text-base md:text-lg leading-relaxed mb-8">
                     Your message has been sent successfully.
                     I'll get back to you as soon as possible.
                 </p>
-
                 <button id="closeModal"
                     class="bg-[#FF5F15] text-black font-bold uppercase px-8 py-4 rounded-full hover:scale-105 transition-all duration-300">
                     Awesome
                 </button>
-
             </div>
         </div>
-
-
-
 
     </main>
 
@@ -762,9 +705,6 @@
     <script>
         document.addEventListener("DOMContentLoaded", () => {
 
-            /* =========================
-               MENU
-            ========================= */
             const menuBtn = document.getElementById("menu-btn");
             const closeBtn = document.getElementById("close-btn");
             const menu = document.getElementById("menu");
@@ -772,16 +712,11 @@
             if (menuBtn && closeBtn && menu) {
                 menuBtn.addEventListener("click", () => menu.classList.remove("translate-x-full"));
                 closeBtn.addEventListener("click", () => menu.classList.add("translate-x-full"));
-
-                // Close menu on nav link click
                 document.querySelectorAll(".menu-link").forEach(link => {
                     link.addEventListener("click", () => menu.classList.add("translate-x-full"));
                 });
             }
 
-            /* =========================
-               ABOUT TEXT COLOR CHANGE
-            ========================= */
             const scrollText = document.getElementById("scroll-text");
             if (scrollText) {
                 new IntersectionObserver((entries) => {
@@ -797,9 +732,6 @@
                 }, { threshold: 0.4 }).observe(scrollText);
             }
 
-            /* =========================
-               EXPERIENCE WORD ANIMATION
-            ========================= */
             const words = document.querySelectorAll(".word");
             const experienceSection = document.getElementById("experience");
 
@@ -815,9 +747,6 @@
                 }, { threshold: 0.3 }).observe(experienceSection);
             }
 
-            /* =========================
-               SPOTLIGHT FOLLOW
-            ========================= */
             const spotlight = document.getElementById("spotlight");
             if (experienceSection && spotlight) {
                 experienceSection.addEventListener("mousemove", (e) => {
@@ -827,9 +756,7 @@
                 });
             }
 
-            /* =========================
-               PROJECT SWITCHER
-            ========================= */
+            /* PROJECT SWITCHER */
             const projects = [
                 {
                     number: "01",
@@ -883,7 +810,6 @@
                             descEl.textContent = p.desc;
                             imageEl.src = p.image;
                             linkEl.href = p.link;
-
                             imageEl.style.opacity = "1";
                             imageEl.style.transform = "scale(1)";
                         }, 150);
@@ -891,19 +817,14 @@
                 });
             }
 
-            /* =========================
-               HORIZONTAL SCROLL — FIXED
-               The fix: sticky-wrap has overflow:hidden
-               JS lerp drives the track (no CSS transition on track)
-            ========================= */
+            /* HORIZONTAL SCROLL */
             const horizontalSection = document.getElementById("horizontal-section");
             const track = document.getElementById("track");
             const dotsWrap = document.getElementById("progress-dots");
 
             if (horizontalSection && track) {
 
-                // Build progress dots
-                const cards = track.querySelectorAll(".proj-card");
+                const cards = track.querySelectorAll("div.shrink-0");
                 cards.forEach((_, i) => {
                     const d = document.createElement("div");
                     d.className = "pdot" + (i === 0 ? " active" : "");
@@ -921,7 +842,6 @@
                     dots.forEach((d, i) => d.classList.toggle("active", i === index));
                 }
 
-                // rAF loop — smooth lerp, no CSS transition needed
                 function tick() {
                     currentX = lerp(currentX, targetX, 0.08);
                     track.style.transform = `translate3d(-${currentX}px, 0, 0)`;
@@ -933,128 +853,81 @@
                     const rect = horizontalSection.getBoundingClientRect();
                     const scrollable = horizontalSection.offsetHeight - window.innerHeight;
                     const progress = Math.max(0, Math.min(1, -rect.top / scrollable));
-
-                    // maxTranslate = total track width minus visible window width
                     const maxTranslate = track.scrollWidth - window.innerWidth + (window.innerWidth * 0.15);
                     targetX = progress * maxTranslate;
-
                     updateDots(progress);
                 }, { passive: true });
             }
 
-        }); // DOMContentLoaded
+        });
 
-
-        /* =========================
-           PRELOADER
-        ========================= */
+        /* PRELOADER */
         window.addEventListener("load", () => {
             const preloader = document.getElementById("preloader");
             const mainContent = document.getElementById("main-content");
 
             setTimeout(() => {
                 preloader.classList.add("slide-up");
-
                 setTimeout(() => {
                     mainContent.classList.remove("hidden");
                     preloader.remove();
                     document.body.style.overflowY = "auto";
                     document.body.style.overflowX = "hidden";
                 }, 3000);
-
             }, 3000);
         });
     </script>
 
     <script>
         document.querySelectorAll(".faq-btn").forEach(button => {
-
             button.addEventListener("click", () => {
-
                 const item = button.parentElement;
                 const content = item.querySelector(".faq-content");
                 const icon = item.querySelector(".faq-icon");
-
                 const isOpen = !content.classList.contains("hidden");
 
-                document.querySelectorAll(".faq-content").forEach(el => {
-                    el.classList.add("hidden");
-                });
-
-                document.querySelectorAll(".faq-icon").forEach(el => {
-                    el.textContent = "+";
-                });
+                document.querySelectorAll(".faq-content").forEach(el => el.classList.add("hidden"));
+                document.querySelectorAll(".faq-icon").forEach(el => el.textContent = "+");
 
                 if (!isOpen) {
                     content.classList.remove("hidden");
                     icon.textContent = "−";
                 }
             });
-
         });
     </script>
-
 
     <script>
         const form = document.getElementById("contactForm");
         const status = document.getElementById("formStatus");
         const submitBtn = document.getElementById("submitBtn");
-
         const modal = document.getElementById("successModal");
         const modalContent = modal.querySelector("div");
         const closeModal = document.getElementById("closeModal");
 
         form.addEventListener("submit", async (e) => {
             e.preventDefault();
-
             submitBtn.disabled = true;
             submitBtn.style.opacity = "0.6";
-
-            status.textContent = "Sending...";
-            status.className = "mt-4 text-yellow-400";
 
             try {
                 const response = await fetch(form.action, {
                     method: "POST",
                     body: new FormData(form),
-                    headers: {
-                        Accept: "application/json"
-                    }
+                    headers: { Accept: "application/json" }
                 });
 
                 if (response.ok) {
-
                     form.reset();
-
-                    status.textContent = "";
-                    status.className = "";
-
-                    // Show modal
-                    modal.classList.remove(
-                        "opacity-0",
-                        "pointer-events-none"
-                    );
-
+                    modal.classList.remove("opacity-0", "pointer-events-none");
                     setTimeout(() => {
                         modalContent.classList.remove("scale-90");
                         modalContent.classList.add("scale-100");
                     }, 10);
-
-                    // Auto close after 4 seconds
-                    setTimeout(() => {
-                        closeSuccessModal();
-                    }, 4000);
-
-                } else {
-                    status.textContent =
-                        "Something went wrong. Please try again.";
-                    status.className = "mt-4 text-red-400";
+                    setTimeout(() => closeSuccessModal(), 4000);
                 }
-
             } catch (error) {
-                status.textContent =
-                    "Network error. Please check your connection.";
-                status.className = "mt-4 text-red-400";
+                console.error(error);
             }
 
             submitBtn.disabled = false;
@@ -1064,25 +937,12 @@
         function closeSuccessModal() {
             modalContent.classList.remove("scale-100");
             modalContent.classList.add("scale-90");
-
-            setTimeout(() => {
-                modal.classList.add(
-                    "opacity-0",
-                    "pointer-events-none"
-                );
-            }, 300);
+            setTimeout(() => modal.classList.add("opacity-0", "pointer-events-none"), 300);
         }
 
         closeModal.addEventListener("click", closeSuccessModal);
-
-        // Close when clicking outside
-        modal.addEventListener("click", (e) => {
-            if (e.target === modal) {
-                closeSuccessModal();
-            }
-        });
+        modal.addEventListener("click", (e) => { if (e.target === modal) closeSuccessModal(); });
     </script>
 
 </body>
-
 </html>
