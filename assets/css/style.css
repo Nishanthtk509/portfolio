@@ -1,0 +1,187 @@
+html,
+body {
+    width: 100%;
+    overflow-x: hidden;
+}
+
+
+.fade-up {
+    opacity: 0;
+    transform: translateY(60px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+}
+
+.fade-up.show {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.delay-1 {
+    transition-delay: 0.2s;
+}
+
+.delay-2 {
+    transition-delay: 0.4s;
+}
+
+.delay-3 {
+    transition-delay: 0.6s;
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+    display: none;
+}
+
+.scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
+.skills-slider {
+    animation: skillsScroll 20s linear infinite;
+    width: max-content;
+}
+
+.skills-slider:hover {
+    animation-play-state: paused;
+}
+
+@keyframes skillsScroll {
+    from {
+        transform: translateX(0);
+    }
+
+    to {
+        transform: translateX(-50%);
+    }
+}
+
+/* =========================
+   REVEAL ANIMATION (UPGRADED)
+========================= */
+
+.reveal,
+.project-card {
+    opacity: 0;
+    transform: translateY(50px);
+    filter: blur(10px);
+
+    transition:
+        opacity 1s cubic-bezier(.22,1,.36,1),
+        transform 1s cubic-bezier(.22,1,.36,1),
+        filter 1s cubic-bezier(.22,1,.36,1);
+}
+
+.reveal.show,
+.project-card.show {
+    opacity: 1;
+    transform: translateY(0);
+    filter: blur(0);
+}
+
+/* =========================
+   PROJECT CARD (CLEAN PREMIUM)
+========================= */
+
+.project-card {
+    position: relative;
+    transition:
+        transform .5s cubic-bezier(.22,1,.36,1);
+}
+
+.project-card:hover {
+    transform: translateY(-8px);
+}
+
+/* Soft border glow */
+.project-card::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: 2rem;
+    padding: 1px;
+    
+    opacity: 0;
+    transition: opacity .6s ease;
+    pointer-events: none;
+}
+
+.project-card:hover::before {
+    opacity: 1;
+}
+
+/* =========================
+   IMAGE
+========================= */
+
+.project-image {
+    transition:
+        transform 1s cubic-bezier(.22,1,.36,1),
+        filter 1s ease;
+}
+
+.project-card:hover .project-image {
+    transform: scale(1.05);
+    filter: brightness(1.05);
+}
+
+/* =========================
+   TEXT ANIMATIONS
+========================= */
+
+.project-card h3 {
+    transition: .5s ease;
+}
+
+.project-card:hover h3 {
+    color: #FF5F15;
+}
+
+/* Number motion */
+.project-card span.text-\[\#FF5F15\] {
+    transition: .5s ease;
+}
+
+.project-card:hover span.text-\[\#FF5F15\] {
+    transform: translateX(6px);
+}
+
+/* =========================
+   TAGS
+========================= */
+
+.project-card span[class*="px-4"] {
+    transition: .3s ease;
+}
+
+.project-card span[class*="px-4"]:hover {
+    border-color: #FF5F15;
+    color: #FF5F15;
+    transform: translateY(-2px);
+}
+
+/* =========================
+   FLOAT BACKGROUND (KEEP LIGHT)
+========================= */
+
+@keyframes float {
+    0%,100% { transform: translateY(0); }
+    50% { transform: translateY(-30px); }
+}
+
+@keyframes floatReverse {
+    0%,100% { transform: translateY(0); }
+    50% { transform: translateY(30px); }
+}
+
+.animate-float {
+    animation: float 12s ease-in-out infinite;
+}
+
+.animate-float-reverse {
+    animation: floatReverse 14s ease-in-out infinite;
+}
+
+
+
+

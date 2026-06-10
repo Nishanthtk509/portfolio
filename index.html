@@ -4,529 +4,767 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NISHANTH Portfolio</title>
+    <title>Fullscreen Hamburger Menu</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <style>
-        .slide-up {
-            transform: translateY(-100%);
-        }
-
-        html {
-            scroll-behavior: smooth;
-        }
-
-        body {
-            overflow-x: hidden;
-        }
-
-        /* =====================
-           WORD ANIMATION
-        ===================== */
-        .word {
-            display: inline-block;
-            opacity: 0;
-            transform: translateY(20px);
-            filter: blur(5px);
-            transition: all 0.6s ease;
-        }
-
-        .word.show {
-            opacity: 1;
-            transform: translateY(0);
-            filter: blur(0);
-        }
-
-        /* =====================
-           HORIZONTAL SCROLL FIX
-        ===================== */
-        #horizontal-section {
-            position: relative;
-            background: #000;
-        }
-
-        #horizontal-section .sticky-wrap {
-            position: sticky;
-            top: 0;
-            height: 100vh;
-            overflow: hidden;
-            display: flex;
-            align-items: center;
-        }
-
-        #track {
-            display: flex;
-            gap: 32px;
-            padding: 0 15vw;
-            will-change: transform;
-        }
-
-        .proj-card:hover {
-            border-color: #FF5F15;
-        }
-
-        .proj-card-bg {
-            position: absolute;
-            inset: 0;
-            background: #1a1a1a;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 5rem;
-            overflow: hidden;
-        }
-
-        .proj-card:hover .proj-card-bg img {
-            opacity: 0.7;
-            transform: scale(1.04);
-        }
-
-        .proj-card-content {
-            position: relative;
-            z-index: 2;
-        }
-
-        .proj-card-num {
-            font-size: 0.75rem;
-            color: #FF5F15;
-            letter-spacing: 0.3em;
-            text-transform: uppercase;
-            margin-bottom: 8px;
-        }
-
-        /* Progress dots */
-        .progress-dots {
-            position: absolute;
-            bottom: 28px;
-            left: 50%;
-            transform: translateX(-50%);
-            display: flex;
-            gap: 8px;
-            z-index: 10;
-        }
-
-        .pdot {
-            width: 6px;
-            height: 6px;
-            border-radius: 50%;
-            background: #333;
-            transition: background 0.3s, transform 0.3s;
-            cursor: pointer;
-        }
-
-        .pdot.active {
-            background: #FF5F15;
-            transform: scale(1.5);
-        }
-
-        #project-image {
-            transition: opacity 0.3s ease, transform 0.3s ease;
-        }
-
-        .hide-scrollbar {
-            -ms-overflow-style: none;
-            scrollbar-width: none;
-        }
-
-        .hide-scrollbar::-webkit-scrollbar {
-            display: none;
-        }
-
-        /* =====================
-           MOBILE GAP FIXES
-        ===================== */
-
-        /* Remove excessive vertical padding on mobile */
-        @media (max-width: 767px) {
-
-            /* Hero section — no full screen height on mobile */
-            #home {
-                min-height: auto !important;
-                padding-top: 100px !important;
-                padding-bottom: 60px !important;
-            }
-
-            /* About section */
-            #about {
-                padding-top: 48px !important;
-                padding-bottom: 48px !important;
-            }
-
-            /* About sticky text — remove tall empty space */
-            #about .h-\[50vh\] {
-                height: auto !important;
-                min-height: 0 !important;
-            }
-
-            /* Experience section */
-            #experience {
-                padding-top: 48px !important;
-                padding-bottom: 48px !important;
-            }
-
-            /* Experience grid height on mobile */
-            #experience .h-\[80vh\] {
-                height: auto !important;
-            }
-
-            /* FAQ section */
-            .relative.bg-black.text-white.py-20 {
-                padding-top: 48px !important;
-                padding-bottom: 48px !important;
-            }
-
-            /* Contact form section */
-            #form {
-                padding-top: 48px !important;
-                padding-bottom: 48px !important;
-            }
-
-            /* Footer / Get In Touch section */
-            #contact {
-                min-height: auto !important;
-                padding-top: 60px !important;
-                padding-bottom: 60px !important;
-            }
-
-            /* Pin container for project switcher — reduce height */
-            #pin-container {
-                height: 280vh !important;
-            }
-
-            /* Horizontal scroll section — reduce height */
-            #horizontal-section {
-                height: 300vw !important;
-            }
-
-            /* FAQ text size on mobile */
-            .faq-btn span.text-2xl {
-                font-size: 1.1rem !important;
-                line-height: 1.4 !important;
-            }
-
-            /* FAQ padding reduce */
-            .faq-btn {
-                padding: 1.25rem !important;
-            }
-
-            .faq-content {
-                padding-left: 1.25rem !important;
-                padding-right: 1.25rem !important;
-                padding-bottom: 1.25rem !important;
-            }
-
-            /* Contact form call CTA text */
-            #form .text-2xl {
-                font-size: 1rem !important;
-            }
-        }
-
-        /* Small phones */
-        @media (max-width: 480px) {
-            #home {
-                padding-top: 88px !important;
-                padding-bottom: 48px !important;
-            }
-
-            #contact {
-                padding-top: 48px !important;
-                padding-bottom: 48px !important;
-            }
-
-            /* Experience right column text */
-            #experience .text-2xl {
-                font-size: 1.35rem !important;
-                line-height: 1.3 !important;
-            }
-        }
-    </style>
+    <link rel="stylesheet" href="assets/css/style.css">
 </head>
 
-<body class="bg-black overflow-hidden">
+<body class="bg-blue-500 text-white overflow-x-hidden">
 
-    <!-- ===================== PRELOADER ===================== -->
+
     <div id="preloader"
-        class="fixed inset-0 bg-[#FF5F15] flex items-center justify-center overflow-hidden z-50 transition-transform duration-[3000ms] ease-in-out">
-        <h1 class="absolute select-none pointer-events-none
-            text-center whitespace-nowrap
-            text-3xl sm:text-5xl md:text-6xl lg:text-8xl xl:text-9xl
-            font-black uppercase tracking-[0.08em] sm:tracking-[0.12em]
-            text-black opacity-10 px-4">
-            NISHANTH TK
-        </h1>
+        class="fixed inset-0 z-[9999] bg-[#FF5F15] flex items-center justify-center transform transition-transform duration-1000 ease-in-out">
+
+        <!-- <h1 class="text-white text-4xl md:text-7xl font-black uppercase tracking-tight">
+            NISHANTH
+        </h1> -->
+        <div
+            class="absolute left-1/2 lg:left-0 top-1/2 -translate-x-1/2 lg:translate-x-0 -translate-y-1/2 text-[5rem] sm:text-[7rem] md:text-[10rem] xl:text-[17rem] font-black text-white/[0.09] whitespace-nowrap">
+            NISHANTH
+        </div>
+
     </div>
 
-    <!-- ===================== MAIN CONTENT ===================== -->
-    <main id="main-content" class="hidden min-h-screen bg-black overflow-x-hidden">
+    <!-- Navbar -->
+    <nav class="fixed top-0 left-0 w-full z-50 flex justify-end px-6 md:px-12 py-6">
+        <!-- Hamburger -->
+        <button id="menuBtn" class="relative w-10 h-10 flex flex-col justify-center items-center">
+            <span id="line1" class="absolute w-8 h-[2px] bg-white transition-all duration-300 -translate-y-2">
+            </span>
 
-        <!-- NAVBAR -->
-        <nav class="fixed top-0 left-0 w-full z-50">
-            <div class="max-w-7xl mx-auto px-6 lg:px-10 py-6 flex items-center justify-between">
-                <a href="#home" class="text-white text-lg sm:text-xl md:text-2xl font-bold tracking-widest"></a>
-                <button id="menu-btn" class="relative z-[110] flex flex-col gap-2 cursor-pointer">
-                    <span class="w-8 h-[2px] bg-white"></span>
-                    <span class="w-6 ml-auto h-[2px] bg-white"></span>
-                    <span class="w-8 h-[2px] bg-white"></span>
-                </button>
+            <span id="line2" class="absolute w-8 h-[2px] bg-white transition-all duration-300">
+            </span>
+
+            <span id="line3" class="absolute w-8 h-[2px] bg-white transition-all duration-300 translate-y-2">
+            </span>
+        </button>
+    </nav>
+
+
+
+    <!-- Fullscreen Menu -->
+    <div id="menu"
+        class="fixed inset-0 bg-black z-40 flex items-center justify-center translate-x-full transition-transform duration-700 ease-in-out">
+
+        <div class="text-center">
+            <ul class="space-y-6">
+                <li>
+                    <a href="#home" class="text-5xl md:text-7xl font-black uppercase hover:text-[#FF5F15] transition">
+                        Home
+                    </a>
+                </li>
+
+                <li>
+                    <a href="#about" class="text-5xl md:text-7xl font-black uppercase hover:text-[#FF5F15] transition">
+                        About
+                    </a>
+                </li>
+
+                <li>
+                    <a href="#work" class="text-5xl md:text-7xl font-black uppercase hover:text-[#FF5F15] transition">
+                        Work
+                    </a>
+                </li>
+
+                <li>
+                    <a href="#contact"
+                        class="text-5xl md:text-7xl font-black uppercase hover:text-[#FF5F15] transition">
+                        Contact
+                    </a>
+                </li>
+            </ul>
+        </div>
+
+    </div>
+
+    <!-- HERO SECTION -->
+<section class="relative h-screen bg-black text-white flex items-center overflow-hidden">
+
+    <!-- Animated Background -->
+    <div class="absolute inset-0 overflow-hidden pointer-events-none">
+
+        <!-- Background Text -->
+        <div
+            class="absolute left-1/2 lg:left-0 top-1/2 -translate-x-1/2 lg:translate-x-0 -translate-y-1/2 text-[5rem] sm:text-[7rem] md:text-[10rem] xl:text-[17rem] font-black text-white/[0.03] whitespace-nowrap">
+            DEVELOPER
+        </div>
+
+        <!-- Orange Glow -->
+        <div class="hero-glow hero-glow-1"></div>
+
+        <!-- White Glow -->
+        <div class="hero-glow hero-glow-2"></div>
+
+        <!-- Rotating Circle -->
+        <div class="hero-circle hero-circle-1"></div>
+
+        <!-- Rotating Circle -->
+        <div class="hero-circle hero-circle-2"></div>
+
+        <!-- Animated Line -->
+        <div class="hero-line"></div>
+
+        <!-- Floating Dots -->
+        <div class="hero-dot hero-dot-1"></div>
+        <div class="hero-dot hero-dot-2"></div>
+        <div class="hero-dot hero-dot-3"></div>
+
+    </div>
+
+    <!-- Content -->
+    <div class="relative z-10 px-6 md:px-12 lg:px-20 max-w-7xl">
+
+        <!-- Status -->
+        <div class="flex items-center gap-3 mb-8">
+            <span class="w-3 h-3 rounded-full bg-green-500 animate-pulse"></span>
+
+            <span class="text-xs md:text-sm uppercase tracking-[0.3em] text-gray-400">
+                Available For Work
+            </span>
+        </div>
+
+        <!-- Heading -->
+        <h1 class="font-black leading-[0.85]
+                   text-[4rem]
+                   sm:text-[6rem]
+                   md:text-[8rem]
+                   lg:text-[10rem]
+                   xl:text-[12rem]">
+            NISHANTH
+            <br>
+            <span class="text-[#FF5F15]">TK</span>
+        </h1>
+
+        <!-- Description -->
+        <p class="mt-8 max-w-2xl
+                  text-lg
+                  md:text-xl
+                  lg:text-2xl
+                  text-gray-400 leading-relaxed">
+            Full Stack Developer specializing in Django,
+            Django REST Framework, API Development,
+            and modern web experiences.
+        </p>
+
+        <!-- Buttons -->
+        <div class="mt-12 flex flex-wrap gap-4">
+
+            <a href="#work"
+                class="px-8 py-4 bg-[#FF5F15] rounded-full font-semibold hover:scale-105 transition duration-300">
+                View Work
+            </a>
+
+            <a href="#contact"
+                class="px-8 py-4 border border-white/20 rounded-full hover:border-[#FF5F15] hover:text-[#FF5F15] transition duration-300">
+                Contact Me
+            </a>
+
+        </div>
+
+    </div>
+
+</section>
+
+<style>
+/* ==========================
+   GLOW EFFECTS
+========================== */
+
+.hero-glow {
+    position: absolute;
+    border-radius: 9999px;
+    filter: blur(120px);
+}
+
+.hero-glow-1 {
+    width: 350px;
+    height: 350px;
+    background: #FF5F15;
+    opacity: .15;
+    top: 10%;
+    left: -120px;
+    animation: floatGlow 8s ease-in-out infinite;
+}
+
+.hero-glow-2 {
+    width: 280px;
+    height: 280px;
+    background: white;
+    opacity: .05;
+    bottom: 5%;
+    right: -80px;
+    animation: floatGlow 10s ease-in-out infinite reverse;
+}
+
+/* ==========================
+   ROTATING CIRCLES
+========================== */
+
+.hero-circle {
+    position: absolute;
+    border: 1px solid rgba(255, 255, 255, .08);
+    border-radius: 9999px;
+}
+
+.hero-circle-1 {
+    width: 250px;
+    height: 250px;
+    top: 15%;
+    right: 5%;
+    animation: rotateSlow 25s linear infinite;
+}
+
+.hero-circle-2 {
+    width: 140px;
+    height: 140px;
+    bottom: 15%;
+    left: 10%;
+    animation: rotateSlow 18s linear infinite reverse;
+}
+
+/* ==========================
+   MOVING LINE
+========================== */
+
+.hero-line {
+    position: absolute;
+    top: 20%;
+    left: -50%;
+    width: 50%;
+    height: 1px;
+    background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(255,95,21,.8),
+        transparent
+    );
+    animation: lineMove 6s linear infinite;
+}
+
+/* ==========================
+   FLOATING DOTS
+========================== */
+
+.hero-dot {
+    position: absolute;
+    border-radius: 9999px;
+    background: rgba(255,255,255,.15);
+}
+
+.hero-dot-1 {
+    width: 6px;
+    height: 6px;
+    top: 25%;
+    left: 20%;
+    animation: floatDot 5s ease-in-out infinite;
+}
+
+.hero-dot-2 {
+    width: 10px;
+    height: 10px;
+    top: 70%;
+    left: 75%;
+    animation: floatDot 8s ease-in-out infinite;
+}
+
+.hero-dot-3 {
+    width: 8px;
+    height: 8px;
+    top: 40%;
+    right: 15%;
+    animation: floatDot 6s ease-in-out infinite;
+}
+
+/* ==========================
+   ANIMATIONS
+========================== */
+
+@keyframes floatGlow {
+    0%,100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-40px);
+    }
+}
+
+@keyframes rotateSlow {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes lineMove {
+    from {
+        left: -50%;
+    }
+
+    to {
+        left: 120%;
+    }
+}
+
+@keyframes floatDot {
+    0%,100% {
+        transform: translateY(0);
+        opacity: .3;
+    }
+
+    50% {
+        transform: translateY(-25px);
+        opacity: 1;
+    }
+}
+</style>
+
+    <!-- ABOUT SECTION -->
+    <section id="about" class="bg-black text-white py-12 md:py-32 overflow-hidden">
+
+        <div class="max-w-7xl mx-auto px-4 md:px-4 lg:px-6">
+
+            <!-- Top Line -->
+            <div class="flex items-center gap-4 mb-16 fade-up">
+                <span class="text-[#FF5F15] font-bold">(01)</span>
+                <span class="h-px flex-1 bg-white/10"></span>
             </div>
-        </nav>
 
-        <!-- FULLSCREEN MENU -->
-        <div id="menu"
-            class="fixed inset-0 bg-[#FF5F15] z-[100] translate-x-full transition-transform duration-700 ease-in-out">
-            <button id="close-btn" class="absolute top-6 right-6 text-black text-5xl font-light">×</button>
-            <div class="h-full flex flex-col justify-center items-center gap-10">
-                <a href="#home"
-                    class="menu-link text-black text-4xl md:text-6xl font-black uppercase tracking-wider">Home</a>
-                <a href="#about"
-                    class="menu-link text-black text-4xl md:text-6xl font-black uppercase tracking-wider">About</a>
-                <a href="#work"
-                    class="menu-link text-black text-4xl md:text-6xl font-black uppercase tracking-wider">Projects</a>
-                <a href="#form"
-                    class="menu-link text-black text-4xl md:text-6xl font-black uppercase tracking-wider">Contact</a>
-                <a href="assets/pdf/NISHANTH TK.pdf" download
-                    class="menu-link text-black text-4xl md:text-6xl font-black uppercase tracking-wider flex items-center gap-3">
-                    Resume
-                </a>
+            <div class="grid lg:grid-cols-2 gap-16 items-start">
+
+                <!-- Left Side -->
+                <div class="fade-up delay-1">
+                    <p class="text-sm uppercase tracking-[0.3em] text-gray-500 mb-6">
+                        About Me
+                    </p>
+
+                    <h2 class="text-5xl md:text-7xl lg:text-8xl font-black leading-[0.9]">
+                        Building
+                        <br>
+                        Digital
+                        <br>
+                        Experiences
+                    </h2>
+                </div>
+
+                <!-- Right Side -->
+                <div class="fade-up delay-2">
+
+                    <p class="text-xl md:text-2xl leading-relaxed text-gray-300">
+                        I'm <span class="text-white font-semibold">Nishanth TK</span>,
+                        a Full Stack Developer focused on building scalable web
+                        applications using Django, Django REST Framework,
+                        JavaScript, and modern frontend technologies.
+                    </p>
+
+                    <p class="mt-8 text-gray-500 leading-relaxed">
+                        I enjoy transforming ideas into powerful digital products,
+                        creating clean APIs, optimizing performance, and delivering
+                        seamless user experiences. My goal is to build software
+                        that is both functional and visually engaging.
+                    </p>
+
+                    <!-- Stats -->
+                    <div class="grid grid-cols-2 gap-8 mt-12 fade-up delay-3">
+
+                        <div>
+                            <h3 class="counter text-4xl md:text-5xl font-black text-[#FF5F15]" data-target="2">
+                                2+
+                            </h3>
+
+                            <p class="mt-2 text-gray-500">
+                                Years Learning & Building
+                            </p>
+                        </div>
+
+                        <div>
+                            <h3 class="counter text-4xl md:text-5xl font-black text-[#FF5F15]" data-target="20">
+                                20+
+                            </h3>
+
+                            <p class="mt-2 text-gray-500">
+                                Completed Projects
+                            </p>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- SKILLS SECTION -->
+<section id="skills" class="bg-black text-white py-12 overflow-hidden">
+
+    <!-- Header -->
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12 mb-16">
+
+        <div class="flex items-center gap-4 mb-12">
+            <span class="text-[#FF5F15] font-bold">(02)</span>
+            <span class="h-px flex-1 bg-white/10"></span>
+        </div>
+
+        <p class="text-sm uppercase tracking-[0.3em] text-gray-500 mb-4">
+            Skills
+        </p>
+
+        <h2 class="text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-black leading-[0.9]">
+            My
+            <br>
+            Expertise
+        </h2>
+
+    </div>
+
+    <!-- Auto Slider -->
+    <div class="relative overflow-hidden">
+
+        <div class="skills-slider flex gap-4 md:gap-6 w-max">
+
+            <!-- CARD 01 -->
+            <div
+                class="w-[220px] md:w-[260px] flex-shrink-0 rounded-3xl border border-white/10 bg-white/[0.03] p-5">
+                <span class="text-[#FF5F15] text-4xl font-black">01</span>
+                <h3 class="text-xl font-bold mt-3">Python</h3>
+                <p class="mt-2 text-gray-400 text-sm leading-relaxed">
+                    Backend development, automation and scalable applications.
+                </p>
+            </div>
+
+            <!-- CARD 02 -->
+            <div
+                class="w-[220px] md:w-[260px] flex-shrink-0 rounded-3xl border border-white/10 bg-white/[0.03] p-5">
+                <span class="text-[#FF5F15] text-4xl font-black">02</span>
+                <h3 class="text-xl font-bold mt-3">Django</h3>
+                <p class="mt-2 text-gray-400 text-sm leading-relaxed">
+                    Secure and scalable web applications.
+                </p>
+            </div>
+
+            <!-- CARD 03 -->
+            <div
+                class="w-[220px] md:w-[260px] flex-shrink-0 rounded-3xl border border-white/10 bg-white/[0.03] p-5">
+                <span class="text-[#FF5F15] text-4xl font-black">03</span>
+                <h3 class="text-xl font-bold mt-3">REST APIs</h3>
+                <p class="mt-2 text-gray-400 text-sm leading-relaxed">
+                    Authentication, integrations and API architecture.
+                </p>
+            </div>
+
+            <!-- CARD 04 -->
+            <div
+                class="w-[220px] md:w-[260px] flex-shrink-0 rounded-3xl border border-white/10 bg-white/[0.03] p-5">
+                <span class="text-[#FF5F15] text-4xl font-black">04</span>
+                <h3 class="text-xl font-bold mt-3">JavaScript</h3>
+                <p class="mt-2 text-gray-400 text-sm leading-relaxed">
+                    Modern and interactive frontend experiences.
+                </p>
+            </div>
+
+            <!-- CARD 05 -->
+            <div
+                class="w-[220px] md:w-[260px] flex-shrink-0 rounded-3xl border border-white/10 bg-white/[0.03] p-5">
+                <span class="text-[#FF5F15] text-4xl font-black">05</span>
+                <h3 class="text-xl font-bold mt-3">PostgreSQL</h3>
+                <p class="mt-2 text-gray-400 text-sm leading-relaxed">
+                    Database design and performance optimization.
+                </p>
+            </div>
+
+            <!-- CARD 06 -->
+            <div
+                class="w-[220px] md:w-[260px] flex-shrink-0 rounded-3xl border border-white/10 bg-white/[0.03] p-5">
+                <span class="text-[#FF5F15] text-4xl font-black">06</span>
+                <h3 class="text-xl font-bold mt-3">Tailwind CSS</h3>
+                <p class="mt-2 text-gray-400 text-sm leading-relaxed">
+                    Fast and responsive UI development.
+                </p>
+            </div>
+
+            <!-- DUPLICATES FOR INFINITE LOOP -->
+
+            <div
+                class="w-[220px] md:w-[260px] flex-shrink-0 rounded-3xl border border-white/10 bg-white/[0.03] p-5">
+                <span class="text-[#FF5F15] text-4xl font-black">01</span>
+                <h3 class="text-xl font-bold mt-3">Python</h3>
+                <p class="mt-2 text-gray-400 text-sm leading-relaxed">
+                    Backend development, automation and scalable applications.
+                </p>
+            </div>
+
+            <div
+                class="w-[220px] md:w-[260px] flex-shrink-0 rounded-3xl border border-white/10 bg-white/[0.03] p-5">
+                <span class="text-[#FF5F15] text-4xl font-black">02</span>
+                <h3 class="text-xl font-bold mt-3">Django</h3>
+                <p class="mt-2 text-gray-400 text-sm leading-relaxed">
+                    Secure and scalable web applications.
+                </p>
+            </div>
+
+            <div
+                class="w-[220px] md:w-[260px] flex-shrink-0 rounded-3xl border border-white/10 bg-white/[0.03] p-5">
+                <span class="text-[#FF5F15] text-4xl font-black">03</span>
+                <h3 class="text-xl font-bold mt-3">REST APIs</h3>
+                <p class="mt-2 text-gray-400 text-sm leading-relaxed">
+                    Authentication, integrations and API architecture.
+                </p>
+            </div>
+
+            <div
+                class="w-[220px] md:w-[260px] flex-shrink-0 rounded-3xl border border-white/10 bg-white/[0.03] p-5">
+                <span class="text-[#FF5F15] text-4xl font-black">04</span>
+                <h3 class="text-xl font-bold mt-3">JavaScript</h3>
+                <p class="mt-2 text-gray-400 text-sm leading-relaxed">
+                    Modern and interactive frontend experiences.
+                </p>
+            </div>
+
+            <div
+                class="w-[220px] md:w-[260px] flex-shrink-0 rounded-3xl border border-white/10 bg-white/[0.03] p-5">
+                <span class="text-[#FF5F15] text-4xl font-black">05</span>
+                <h3 class="text-xl font-bold mt-3">PostgreSQL</h3>
+                <p class="mt-2 text-gray-400 text-sm leading-relaxed">
+                    Database design and performance optimization.
+                </p>
+            </div>
+
+            <div
+                class="w-[220px] md:w-[260px] flex-shrink-0 rounded-3xl border border-white/10 bg-white/[0.03] p-5">
+                <span class="text-[#FF5F15] text-4xl font-black">06</span>
+                <h3 class="text-xl font-bold mt-3">Tailwind CSS</h3>
+                <p class="mt-2 text-gray-400 text-sm leading-relaxed">
+                    Fast and responsive UI development.
+                </p>
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+
+<!-- WORK SECTION -->
+<section id="work"
+    class="relative bg-black text-white py-24 md:py-32 overflow-hidden">
+
+    <!-- BACKGROUND -->
+    <div class="absolute inset-0 pointer-events-none overflow-hidden">
+
+        <!-- Grid -->
+        <div class="absolute inset-0 opacity-[0.03]">
+            <div
+                class="w-full h-full bg-[linear-gradient(to_right,#ffffff_1px,transparent_1px),linear-gradient(to_bottom,#ffffff_1px,transparent_1px)] bg-[size:80px_80px]">
             </div>
         </div>
 
-        <!-- ===================== HERO ===================== -->
-        <!-- Changed: min-h-screen → py-28 md:min-h-screen on mobile to avoid huge blank gap -->
-        <section id="home"
-            class="py-28 md:min-h-screen flex items-center justify-center lg:justify-start px-6 md:px-12 lg:px-20">
-            <div class="max-w-5xl">
-                <div class="flex items-center gap-4 mb-6">
-                    <span class="w-12 h-[2px] bg-[#FF5F15]"></span>
-                    <p class="text-gray-400 uppercase tracking-[0.3em] text-xs sm:text-sm">Full Stack Developer</p>
-                </div>
-                <h1 class="text-white font-black leading-none tracking-tight
-                    text-5xl sm:text-6xl md:text-7xl lg:text-8xl xl:text-9xl">
-                    NISHANTH
-                </h1>
-                <h1 class="text-[#FF5F15] font-black leading-none tracking-tight
-                    text-5xl sm:text-6xl md:text-7xl lg:text-8xl xl:text-9xl">
-                    TK
-                </h1>
-                <p class="mt-8 max-w-xl text-gray-400 text-sm sm:text-base md:text-lg">
-                    Building modern, responsive and high-performance web applications
-                    using HTML, Tailwind CSS, JavaScript, Django and Python.
-                </p>
-                <div class="mt-10 flex flex-wrap gap-4">
-                    <a href="#work" class="px-8 py-3 bg-[#FF5F15] text-black font-semibold rounded-full">
-                        View Projects
-                    </a>
-                    <a href="#form" class="px-8 py-3 border border-white text-white rounded-full">
-                        Contact Me
-                    </a>
-                </div>
-            </div>
-        </section>
+        <!-- Orange Glow -->
+        <div
+            class="absolute top-20 left-[-200px] w-[500px] h-[500px] rounded-full bg-[#FF5F15]/10 blur-[140px] animate-float">
+        </div>
 
-        <!-- ===================== ABOUT ===================== -->
-        <!-- Changed: h-[50vh] scroll effect container replaced with auto height on mobile -->
-        <section id="about" class="bg-black px-6 md:px-12 py-12 md:py-16">
-            <div class="max-w-6xl mx-auto">
-                <p class="text-[#FF5F15] uppercase tracking-[0.3em] text-sm mb-10">About</p>
-                <!-- Removed h-[50vh] wrapper — caused massive blank gap on mobile -->
-                <div class="md:h-[50vh] relative">
-                    <p id="scroll-text"
-                        class="md:sticky top-32 text-2xl sm:text-3xl md:text-5xl lg:text-6xl xl:text-7xl font-bold leading-tight text-gray-700 transition-all duration-300">
-                        I build modern digital experiences that combine clean design,
-                        performance, and functionality to create products that users love.
-                    </p>
-                </div>
-            </div>
-        </section>
+        <!-- White Glow -->
+        <div
+            class="absolute bottom-0 right-[-150px] w-[400px] h-[400px] rounded-full bg-white/5 blur-[120px] animate-float-reverse">
+        </div>
 
-        <!-- ===================== EXPERIENCE ===================== -->
-        <!-- Changed: h-[80vh] grid → auto height on mobile -->
-        <section id="experience" class="bg-black px-6 md:px-12 py-12 md:py-20">
-            <div class="max-w-7xl mx-auto">
-                <p class="text-[#FF5F15] uppercase tracking-[0.3em] text-sm mb-8">
-                    Experience
+    </div>
+
+    <div class="relative max-w-7xl mx-auto px-4 sm:px-6 md:px-10 lg:px-16">
+
+        <!-- TOP -->
+        <div class="flex items-center gap-4 mb-16 reveal">
+            <span class="text-[#FF5F15] font-bold">(03)</span>
+            <span class="h-px flex-1 bg-white/10"></span>
+        </div>
+
+        <div class="mb-24 reveal">
+            <p class="text-sm uppercase tracking-[0.3em] text-gray-500 mb-6">
+                Selected Work
+            </p>
+
+            <h2
+                class="text-5xl md:text-7xl lg:text-8xl font-black leading-[0.9]">
+                Featured
+                <br>
+                Projects
+            </h2>
+        </div>
+
+        <!-- PROJECT 01 -->
+        <article
+            class="project-card mb-32 grid lg:grid-cols-2 gap-10 items-center">
+
+            <div class="order-2 lg:order-1">
+
+                <span class="text-[#FF5F15] text-xl font-bold">
+                    01
+                </span>
+
+                <h3
+                    class="text-4xl md:text-6xl font-black mt-4 leading-none">
+                    E-Commerce
+                    Platform
+                </h3>
+
+                <p class="mt-8 text-gray-400 text-lg leading-relaxed">
+                    Full-featured e-commerce platform built with Django,
+                    Django REST Framework and PostgreSQL.
                 </p>
 
-                <div class="grid lg:grid-cols-2 gap-8 lg:gap-12 lg:h-[80vh]">
+                <div class="flex gap-3 flex-wrap mt-8">
 
-                    <!-- LEFT IMAGE -->
-                    <div class="hidden lg:block h-full">
-                        <div class="relative h-full rounded-3xl overflow-hidden">
-                            <img src="assets/img/cybexel.png" class="absolute inset-0 w-full h-full object-cover">
-                            <div class="absolute inset-0 bg-black/20"></div>
-                        </div>
-                    </div>
+                    <span
+                        class="px-4 py-2 border border-white/10 rounded-full text-sm">
+                        Django
+                    </span>
 
-                    <!-- MOBILE IMAGE -->
-                    <div class="lg:hidden h-[220px] rounded-3xl overflow-hidden">
-                        <img src="assets/img/cybexel.png" class="w-full h-full object-cover">
-                    </div>
+                    <span
+                        class="px-4 py-2 border border-white/10 rounded-full text-sm">
+                        DRF
+                    </span>
 
-                    <div class="h-full overflow-y-auto hide-scrollbar py-4">
-                        <p class="text-xl sm:text-2xl md:text-3xl lg:text-5xl xl:text-6xl font-black text-white leading-[1.2]">
-                            Hi, I'm <span class="text-[#FF5F15]">Nishanth TK</span>, a Full Stack Developer specializing
-                            in Python, Django, Django REST Framework, JavaScript, HTML, and CSS.
-                            With <span class="text-[#FF5F15]">2 years of experience</span>, I build responsive user
-                            interfaces and scalable back-end systems that deliver seamless digital experiences.
-                            I worked as an Associate Web Developer at Cybexel Technologies Pvt Ltd from April 2024
-                            to April 2026, developing modern web applications, REST APIs, and user-focused digital
-                            solutions.
-                        </p>
-                    </div>
+                    <span
+                        class="px-4 py-2 border border-white/10 rounded-full text-sm">
+                        PostgreSQL
+                    </span>
 
                 </div>
-            </div>
-        </section>
 
-
-        <!-- ===================== SELECTED WORK ===================== -->
-        <section id="work" class="bg-black">
-            <div class="max-w-7xl mx-auto px-6 md:px-12">
-                <p class="text-[#FF5F15] uppercase tracking-[0.3em] text-sm mb-10">Selected Works</p>
             </div>
 
-            <!-- Changed: h-[120vh] → h-[240vh] on mobile for better scroll feel -->
-            <div id="pin-container" class="relative h-[240vh] md:h-[160vh] lg:h-[120vh]">
-                <div class="sticky top-0 h-screen flex items-center bg-black">
-                    <div class="max-w-7xl mx-auto w-full grid lg:grid-cols-2 gap-8 lg:gap-16 items-center px-6 md:px-12">
+            <div
+                class="order-1 lg:order-2 overflow-hidden rounded-[2rem] border border-white/10">
 
-                        <!-- LEFT NUMBER -->
-                        <div>
-                            <h1 id="project-number"
-                                class="text-[22vw] font-black text-gray-800 leading-none select-none">
-                                01
-                            </h1>
-                        </div>
+                <img src="assets/img/jewellery.png"
+                    class="project-image w-full h-[280px] md:h-[500px] object-cover"
+                    alt="Project">
 
-                        <!-- RIGHT CONTENT -->
-                        <div>
-                            <div class="overflow-hidden rounded-3xl">
-                                <img id="project-image" src="assets/img/buysel.png"
-                                    class="w-full h-[200px] sm:h-[260px] md:h-[320px] lg:h-[380px] object-cover">
-                            </div>
-                            <h2 id="project-title" class="text-white text-2xl md:text-4xl lg:text-5xl font-black mt-4 md:mt-6">
-                                Buysel
-                            </h2>
-                            <p id="project-desc" class="text-gray-500 mt-3">
-                                Django • Tailwind • API
-                            </p>
-                            <a id="project-link" href="https://buysel.in" target="_blank"
-                                class="inline-block mt-4 md:mt-6 text-[#FF5F15] font-semibold hover:underline">
-                                View Project
-                            </a>
-                        </div>
-
-                    </div>
-                </div>
             </div>
-        </section>
 
-        <!-- ===================== HORIZONTAL PROJECTS SCROLL ===================== -->
-        <section id="horizontal-section">
-            <div class="sticky-wrap">
-                <div class="absolute top-10 left-6 md:left-12 z-20">
-                    <p class="text-[#FF5F15] uppercase tracking-[0.3em] text-sm mb-1">Skills</p>
-                </div>
+        </article>
 
-                <div id="track" class="flex gap-6 px-6 md:px-12">
+        <!-- PROJECT 02 -->
+        <article
+            class="project-card mb-32 grid lg:grid-cols-2 gap-10 items-center">
 
-                    <div class="w-[80vw] sm:w-[60vw] lg:w-[35vw] max-w-[680px] h-[40vh] sm:h-[45vh] lg:h-[52vh]
-                bg-[#111] border border-[#222] rounded-[28px]
-                flex items-center justify-center text-center
-                p-8 shrink-0 transition-all duration-300 hover:border-[#FF5F15]">
-                        <div>
-                            <div class="text-[#FF5F15] text-5xl md:text-6xl font-black mb-4">01</div>
-                            <h3 class="text-white text-3xl md:text-5xl font-black">Python</h3>
-                        </div>
-                    </div>
+            <div
+                class="overflow-hidden rounded-[2rem] border border-white/10">
 
-                    <div class="w-[80vw] sm:w-[60vw] lg:w-[35vw] max-w-[680px] h-[40vh] sm:h-[45vh] lg:h-[52vh]
-                bg-[#111] border border-[#222] rounded-[28px]
-                flex items-center justify-center text-center
-                p-8 shrink-0 transition-all duration-300 hover:border-[#FF5F15]">
-                        <div>
-                            <div class="text-[#FF5F15] text-5xl md:text-6xl font-black mb-4">02</div>
-                            <h3 class="text-white text-3xl md:text-5xl font-black">Django</h3>
-                        </div>
-                    </div>
+                <img src="assets/img/buysel.png"
+                    class="project-image w-full h-[280px] md:h-[500px] object-cover"
+                    alt="Project">
 
-                    <div class="w-[80vw] sm:w-[60vw] lg:w-[35vw] max-w-[680px] h-[40vh] sm:h-[45vh] lg:h-[52vh]
-                bg-[#111] border border-[#222] rounded-[28px]
-                flex items-center justify-center text-center
-                p-8 shrink-0 transition-all duration-300 hover:border-[#FF5F15]">
-                        <div>
-                            <div class="text-[#FF5F15] text-5xl md:text-6xl font-black mb-4">03</div>
-                            <h3 class="text-white text-3xl md:text-5xl font-black">FastAPI</h3>
-                        </div>
-                    </div>
+            </div>
 
-                    <div class="w-[80vw] sm:w-[60vw] lg:w-[35vw] max-w-[680px] h-[40vh] sm:h-[45vh] lg:h-[52vh]
-                bg-[#111] border border-[#222] rounded-[28px]
-                flex items-center justify-center text-center
-                p-8 shrink-0 transition-all duration-300 hover:border-[#FF5F15]">
-                        <div>
-                            <div class="text-[#FF5F15] text-5xl md:text-6xl font-black mb-4">04</div>
-                            <h3 class="text-white text-3xl md:text-5xl font-black">Rest Apis</h3>
-                        </div>
-                    </div>
+            <div>
 
-                    <div class="w-[80vw] sm:w-[60vw] lg:w-[35vw] max-w-[680px] h-[40vh] sm:h-[45vh] lg:h-[52vh]
-                bg-[#111] border border-[#222] rounded-[28px]
-                flex items-center justify-center text-center
-                p-8 shrink-0 transition-all duration-300 hover:border-[#FF5F15]">
-                        <div>
-                            <div class="text-[#FF5F15] text-5xl md:text-6xl font-black mb-4">05</div>
-                            <h3 class="text-white text-3xl md:text-5xl font-black">HTML</h3>
-                        </div>
-                    </div>
+                <span class="text-[#FF5F15] text-xl font-bold">
+                    02
+                </span>
 
-                    <div class="w-[80vw] sm:w-[60vw] lg:w-[35vw] max-w-[680px] h-[40vh] sm:h-[45vh] lg:h-[52vh]
-                bg-[#111] border border-[#222] rounded-[28px]
-                flex items-center justify-center text-center
-                p-8 shrink-0 transition-all duration-300 hover:border-[#FF5F15]">
-                        <div>
-                            <div class="text-[#FF5F15] text-5xl md:text-6xl font-black mb-4">06</div>
-                            <h3 class="text-white text-3xl md:text-5xl font-black">Tailwind Css</h3>
-                        </div>
-                    </div>
+                <h3
+                    class="text-4xl md:text-6xl font-black mt-4 leading-none">
+                    Buysel
+                </h3>
 
-                    <div class="w-[80vw] sm:w-[60vw] lg:w-[35vw] max-w-[680px] h-[40vh] sm:h-[45vh] lg:h-[52vh]
-                bg-[#111] border border-[#222] rounded-[28px]
-                flex items-center justify-center text-center
-                p-8 shrink-0 transition-all duration-300 hover:border-[#FF5F15]">
-                        <div>
-                            <div class="text-[#FF5F15] text-5xl md:text-6xl font-black mb-4">07</div>
-                            <h3 class="text-white text-3xl md:text-5xl font-black">CSS</h3>
-                        </div>
-                    </div>
+                <p class="mt-8 text-gray-400 text-lg leading-relaxed">
+                    AI-powered assistant with chatbot, voice interaction,
+                    document analysis and real-time search.
+                </p>
 
-                    <div class="w-[80vw] sm:w-[60vw] lg:w-[35vw] max-w-[680px] h-[40vh] sm:h-[45vh] lg:h-[52vh]
-                bg-[#111] border border-[#222] rounded-[28px]
-                flex items-center justify-center text-center
-                p-8 shrink-0 transition-all duration-300 hover:border-[#FF5F15]">
-                        <div>
-                            <div class="text-[#FF5F15] text-5xl md:text-6xl font-black mb-4">08</div>
-                            <h3 class="text-white text-3xl md:text-5xl font-black">JavaScript</h3>
-                        </div>
-                    </div>
+                <div class="flex gap-3 flex-wrap mt-8">
 
-                    <div class="w-[80vw] sm:w-[60vw] lg:w-[35vw] max-w-[680px] h-[40vh] sm:h-[45vh] lg:h-[52vh]
-                bg-[#111] border border-[#222] rounded-[28px]
-                flex items-center justify-center text-center
-                p-8 shrink-0 transition-all duration-300 hover:border-[#FF5F15]">
-                        <div>
-                            <div class="text-[#FF5F15] text-5xl md:text-6xl font-black mb-4">09</div>
-                            <h3 class="text-white text-3xl md:text-5xl font-black">JQuery</h3>
-                        </div>
-                    </div>
+                    <span
+                        class="px-4 py-2 border border-white/10 rounded-full text-sm">
+                        Python
+                    </span>
+
+                    <span
+                        class="px-4 py-2 border border-white/10 rounded-full text-sm">
+                        Django
+                    </span>
+
+                    <span
+                        class="px-4 py-2 border border-white/10 rounded-full text-sm">
+                        OpenAI
+                    </span>
 
                 </div>
-                <div class="progress-dots" id="progress-dots"></div>
+
             </div>
-        </section>
+
+        </article>
+
+        <!-- PROJECT 03 -->
+        <article
+            class="project-card grid lg:grid-cols-2 gap-10 items-center">
+
+            <div class="order-2 lg:order-1">
+
+                <span class="text-[#FF5F15] text-xl font-bold">
+                    03
+                </span>
+
+                <h3
+                    class="text-4xl md:text-6xl font-black mt-4 leading-none">
+                    CRM Dashboard
+                </h3>
+
+                <p class="mt-8 text-gray-400 text-lg leading-relaxed">
+                    CRM dashboard with analytics, reporting and customer
+                    management tools.
+                </p>
+
+                <div class="flex gap-3 flex-wrap mt-8">
+
+                    <span
+                        class="px-4 py-2 border border-white/10 rounded-full text-sm">
+                        Django
+                    </span>
+
+                    <span
+                        class="px-4 py-2 border border-white/10 rounded-full text-sm">
+                        PostgreSQL
+                    </span>
+
+                    <span
+                        class="px-4 py-2 border border-white/10 rounded-full text-sm">
+                        Charts
+                    </span>
+
+                </div>
+
+            </div>
+
+            <div
+                class="order-1 lg:order-2 overflow-hidden rounded-[2rem] border border-white/10">
+
+                <img src="assets/img/spares.png"
+                    class="project-image w-full h-[280px] md:h-[500px] object-cover"
+                    alt="Project">
+
+            </div>
+
+        </article>
+
+    </div>
+
+</section>
 
 
-        <!-- ===================== FAQ ===================== -->
-        <section class="relative bg-black text-white py-12 md:py-20 overflow-hidden">
+ <section class="relative bg-black text-white py-12 md:py-20 overflow-hidden">
+    
             <div class="absolute inset-0 pointer-events-none">
                 <div class="absolute left-1/4 top-0 w-96 h-full bg-white/10 blur-[120px]"></div>
             </div>
@@ -599,6 +837,7 @@
                 </div>
             </div>
         </section>
+
 
 
         <!-- ===================== CONTACT FORM ===================== -->
@@ -701,248 +940,17 @@
 
     </main>
 
-    <!-- ===================== SCRIPTS ===================== -->
-    <script>
-        document.addEventListener("DOMContentLoaded", () => {
+   
 
-            const menuBtn = document.getElementById("menu-btn");
-            const closeBtn = document.getElementById("close-btn");
-            const menu = document.getElementById("menu");
+    
 
-            if (menuBtn && closeBtn && menu) {
-                menuBtn.addEventListener("click", () => menu.classList.remove("translate-x-full"));
-                closeBtn.addEventListener("click", () => menu.classList.add("translate-x-full"));
-                document.querySelectorAll(".menu-link").forEach(link => {
-                    link.addEventListener("click", () => menu.classList.add("translate-x-full"));
-                });
-            }
+     
 
-            const scrollText = document.getElementById("scroll-text");
-            if (scrollText) {
-                new IntersectionObserver((entries) => {
-                    entries.forEach(entry => {
-                        if (entry.isIntersecting) {
-                            scrollText.classList.remove("text-gray-700");
-                            scrollText.classList.add("text-white");
-                        } else {
-                            scrollText.classList.remove("text-white");
-                            scrollText.classList.add("text-gray-700");
-                        }
-                    });
-                }, { threshold: 0.4 }).observe(scrollText);
-            }
 
-            const words = document.querySelectorAll(".word");
-            const experienceSection = document.getElementById("experience");
 
-            if (experienceSection) {
-                new IntersectionObserver((entries) => {
-                    entries.forEach(entry => {
-                        if (entry.isIntersecting) {
-                            words.forEach((word, i) => {
-                                setTimeout(() => word.classList.add("show"), i * 70);
-                            });
-                        }
-                    });
-                }, { threshold: 0.3 }).observe(experienceSection);
-            }
 
-            const spotlight = document.getElementById("spotlight");
-            if (experienceSection && spotlight) {
-                experienceSection.addEventListener("mousemove", (e) => {
-                    const rect = experienceSection.getBoundingClientRect();
-                    spotlight.style.transform =
-                        `translate(${e.clientX - rect.left - 80}px, ${e.clientY - rect.top - 80}px)`;
-                });
-            }
-
-            /* PROJECT SWITCHER */
-            const projects = [
-                {
-                    number: "01",
-                    title: "Cybexel Project",
-                    desc: "Django • Tailwind • API",
-                    image: "assets/img/jewellery.png",
-                    link: "https://myjewellery.goldforum.com"
-                },
-                {
-                    number: "02",
-                    title: "E-Commerce Platform",
-                    desc: "Django • PostgreSQL • Payments",
-                    image: "assets/img/spares.png",
-                    link: "https://sparescorporation.com"
-                },
-                {
-                    number: "03",
-                    title: "Portfolio Website",
-                    desc: "HTML • Tailwind • JS Animations",
-                    image: "assets/img/buysel.png",
-                    link: "https://buysel.in"
-                }
-            ];
-
-            const numberEl = document.getElementById("project-number");
-            const titleEl = document.getElementById("project-title");
-            const descEl = document.getElementById("project-desc");
-            const imageEl = document.getElementById("project-image");
-            const linkEl = document.getElementById("project-link");
-            const pinContainer = document.getElementById("pin-container");
-
-            let lastIndex = -1;
-
-            if (pinContainer) {
-                window.addEventListener("scroll", () => {
-                    const rect = pinContainer.getBoundingClientRect();
-                    const totalScroll = rect.height - window.innerHeight;
-                    let progress = Math.max(0, Math.min(1, -rect.top / totalScroll));
-                    const index = Math.min(projects.length - 1, Math.floor(progress * projects.length));
-
-                    if (index !== lastIndex) {
-                        lastIndex = index;
-                        const p = projects[index];
-
-                        imageEl.style.opacity = "0";
-                        imageEl.style.transform = "scale(1.05)";
-
-                        setTimeout(() => {
-                            numberEl.textContent = p.number;
-                            titleEl.textContent = p.title;
-                            descEl.textContent = p.desc;
-                            imageEl.src = p.image;
-                            linkEl.href = p.link;
-                            imageEl.style.opacity = "1";
-                            imageEl.style.transform = "scale(1)";
-                        }, 150);
-                    }
-                });
-            }
-
-            /* HORIZONTAL SCROLL */
-            const horizontalSection = document.getElementById("horizontal-section");
-            const track = document.getElementById("track");
-            const dotsWrap = document.getElementById("progress-dots");
-
-            if (horizontalSection && track) {
-
-                const cards = track.querySelectorAll("div.shrink-0");
-                cards.forEach((_, i) => {
-                    const d = document.createElement("div");
-                    d.className = "pdot" + (i === 0 ? " active" : "");
-                    dotsWrap.appendChild(d);
-                });
-                const dots = dotsWrap.querySelectorAll(".pdot");
-
-                let currentX = 0;
-                let targetX = 0;
-
-                function lerp(a, b, t) { return a + (b - a) * t; }
-
-                function updateDots(progress) {
-                    const index = Math.round(progress * (cards.length - 1));
-                    dots.forEach((d, i) => d.classList.toggle("active", i === index));
-                }
-
-                function tick() {
-                    currentX = lerp(currentX, targetX, 0.08);
-                    track.style.transform = `translate3d(-${currentX}px, 0, 0)`;
-                    requestAnimationFrame(tick);
-                }
-                tick();
-
-                window.addEventListener("scroll", () => {
-                    const rect = horizontalSection.getBoundingClientRect();
-                    const scrollable = horizontalSection.offsetHeight - window.innerHeight;
-                    const progress = Math.max(0, Math.min(1, -rect.top / scrollable));
-                    const maxTranslate = track.scrollWidth - window.innerWidth + (window.innerWidth * 0.15);
-                    targetX = progress * maxTranslate;
-                    updateDots(progress);
-                }, { passive: true });
-            }
-
-        });
-
-        /* PRELOADER */
-        window.addEventListener("load", () => {
-            const preloader = document.getElementById("preloader");
-            const mainContent = document.getElementById("main-content");
-
-            setTimeout(() => {
-                preloader.classList.add("slide-up");
-                setTimeout(() => {
-                    mainContent.classList.remove("hidden");
-                    preloader.remove();
-                    document.body.style.overflowY = "auto";
-                    document.body.style.overflowX = "hidden";
-                }, 3000);
-            }, 3000);
-        });
-    </script>
-
-    <script>
-        document.querySelectorAll(".faq-btn").forEach(button => {
-            button.addEventListener("click", () => {
-                const item = button.parentElement;
-                const content = item.querySelector(".faq-content");
-                const icon = item.querySelector(".faq-icon");
-                const isOpen = !content.classList.contains("hidden");
-
-                document.querySelectorAll(".faq-content").forEach(el => el.classList.add("hidden"));
-                document.querySelectorAll(".faq-icon").forEach(el => el.textContent = "+");
-
-                if (!isOpen) {
-                    content.classList.remove("hidden");
-                    icon.textContent = "−";
-                }
-            });
-        });
-    </script>
-
-    <script>
-        const form = document.getElementById("contactForm");
-        const status = document.getElementById("formStatus");
-        const submitBtn = document.getElementById("submitBtn");
-        const modal = document.getElementById("successModal");
-        const modalContent = modal.querySelector("div");
-        const closeModal = document.getElementById("closeModal");
-
-        form.addEventListener("submit", async (e) => {
-            e.preventDefault();
-            submitBtn.disabled = true;
-            submitBtn.style.opacity = "0.6";
-
-            try {
-                const response = await fetch(form.action, {
-                    method: "POST",
-                    body: new FormData(form),
-                    headers: { Accept: "application/json" }
-                });
-
-                if (response.ok) {
-                    form.reset();
-                    modal.classList.remove("opacity-0", "pointer-events-none");
-                    setTimeout(() => {
-                        modalContent.classList.remove("scale-90");
-                        modalContent.classList.add("scale-100");
-                    }, 10);
-                    setTimeout(() => closeSuccessModal(), 4000);
-                }
-            } catch (error) {
-                console.error(error);
-            }
-
-            submitBtn.disabled = false;
-            submitBtn.style.opacity = "1";
-        });
-
-        function closeSuccessModal() {
-            modalContent.classList.remove("scale-100");
-            modalContent.classList.add("scale-90");
-            setTimeout(() => modal.classList.add("opacity-0", "pointer-events-none"), 300);
-        }
-
-        closeModal.addEventListener("click", closeSuccessModal);
-        modal.addEventListener("click", (e) => { if (e.target === modal) closeSuccessModal(); });
-    </script>
+    <script src="assets/js/scripts.js"></script>
 
 </body>
+
 </html>
