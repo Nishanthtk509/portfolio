@@ -89,7 +89,6 @@ document.querySelectorAll("#menu a").forEach(link => {
 });
 
 
-
 document.addEventListener("DOMContentLoaded", () => {
 
     const items = document.querySelectorAll(
